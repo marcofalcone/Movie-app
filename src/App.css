@@ -1,38 +1,202 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: silver transparent;
+  scrollbar-radius: 20px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: silver;
+  border-radius: 20px;
+}
+
+html,body {
+  background: url(https://ik.imagekit.io/7ol7k87qcca/movies/movies_e1GC0VBxF.jpg) center center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+
+.topbar {
+  width: 95%;
+  height: 50px;
+  left: 0;
+  right: 0;
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header {
+  font-size: 6vh;
+  color: cornflowerblue;
+  font-family: 'Poiret One', cursive;
+  font-weight: lighter;
+}
+
+.searchbox {
+  width: 400px;
+  height: 100%;
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid cornflowerblue;
+  font-size: 30px;
+  padding: 20px;
+  outline: none;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.collection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.movie {
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin-left: 20px;
+}
+
+.poster {
+  height: 100%;
+}
+
+.over {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  height: 100%;
+  opacity: 0;
+  color: white;
+  border: 1px solid cornflowerblue;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  transition: .3s ease;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  font-size: 20px;
+  font-family: arial;
+  overflow: auto;
+}
+
+.movie:hover > .over {
+  opacity: 1;
+}
+
+.over p:first-child {
+  text-align: justify;
+}
+
+.over p:last-child:hover {
+  cursor: pointer;
+  color: cornflowerblue;
+}
+
+header {
+  font-family: arial;
+  color: white;
+  position: absolute;
+  top: 0;
+  font-size: 35px;
+  margin-left: 30px;
+}
+
+.left {
+  background: rgba(0, 0, 0, 0.3);
+  color: cornflowerblue;
+  position: sticky;
+  font-size: 50px;
+  z-index: 100;
+  height: 300px;
+  width: 3%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  transition: .3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-.App-link {
-  color: #61dafb;
+.right {
+  background: rgba(0, 0, 0, 0.3);
+  color: cornflowerblue;
+  position: sticky;
+  left: 100%;
+  font-size: 50px;
+  z-index: 100;
+  height: 300px;
+  width: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.left:hover,
+.right:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+@media screen and (max-width: 1024px) {
+
+  .topbar {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .searchbox {
+    width: 100%;
+  }
+
+  .collection {
+    overflow: auto;
+  }
+
+  .left,
+  .right {
+    display: none;
+  }
+
+  .movie:active > .over {
+    opacity: 1;
   }
 }
