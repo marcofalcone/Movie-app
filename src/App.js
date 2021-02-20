@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import Login from './components/Login'
 import Searchbox from "./components/Searchbox"
 import Movielist from './components/Movielist'
 
@@ -48,14 +49,15 @@ const App = (props) => {
 
   return (
     <div className="overlay">
-        <div className="topbar">
-          <h1 className="header">SINEMA</h1>
-          <Searchbox search={search} setSearch={setSearch} />
-        </div>
-            <Movielist title={"Movies"} movies={movies} handlelist={addList} function={"ADD TO LIST"} />
-            <Movielist title={"Mylist"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} />
+    <div className="topbar">
+      <h1 className="header">SINEMA</h1>
+      <Searchbox search={search} setSearch={setSearch} />
+    </div>
+        <Movielist title={"Movies"} movies={movies} handlelist={addList} function={"ADD TO LIST"} />
+        <Movielist title={"Mylist"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} />
     </div>
   );
 }
 
 export default App;
+// <Login />
