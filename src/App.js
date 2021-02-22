@@ -9,20 +9,19 @@ import './App.css';
 
 const App = (props) => {
   const [movies, setMovies] = useState([])
-  const [mylist, setList] = useState([])
+  const [mylist, setMylist] = useState([])
 
   const [search, setSearch] = useState('')
 
-  const getMovie = async (setSearch) => {
+  const getMovie = async () => {
     const url_default = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
-    const url = "https://api.themoviedb.org/3/search/movie?api_key=77de0ebb8c18224df76cf38477a907f5&query=" + search;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=77de0ebb8c18224df76cf38477a907f5&query=${search}`;
 
-    const response_default = await fetch(url_default)
-    const response = await fetch(url);
-
+    const response_default = await fetch(url_default);
     const responseJson_default = await response_default.json();
-    const responseJson = await response.json();
 
+    const response = await fetch(url);
+    const responseJson = await response.json();
 
       if (responseJson.results) {
       setMovies(responseJson.results)
@@ -32,19 +31,19 @@ const App = (props) => {
   }
 
   useEffect(() => {
-    getMovie(search);
+    getMovie();
   }, [search]);
 
   const addList = (movie) => {
     const newList = [...mylist, movie];
-    setList(newList);
+    setMylist(newList);
   }
 
   const removeList = (movie) => {
     const newList = mylist.filter(
       (item) => item.id !== movie.id
     );
-    setList(newList);
+    setMylist(newList);
   }
 
   return (
@@ -54,7 +53,7 @@ const App = (props) => {
       <Searchbox search={search} setSearch={setSearch} />
     </div>
         <Movielist title={"Movies"} movies={movies} handlelist={addList} function={"ADD TO LIST"} />
-        <Movielist title={"Mylist"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} />
+        <Movielist title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} />
     </div>
   );
 }

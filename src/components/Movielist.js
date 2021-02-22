@@ -1,9 +1,9 @@
 const Movielist = (props) => {
-  function scroll_left() {
+  const scroll_left = () => {
     document.getElementById('collection').scrollLeft += 1000;
   }
 
-  function scroll_right() {
+  const scroll_right = () => {
     document.getElementById('collection').scrollLeft += -1000;
   }
 
@@ -15,8 +15,8 @@ const Movielist = (props) => {
     <div className="left" onClick={scroll_right}>&#10094;</div>
     <div className="right" onClick={scroll_left}>&#10095;</div>
     <div className="collection" id="collection">
-    {props.movies.map((movie, index) =>
-      <div className="movie">
+    {props.movies.map( movie =>
+      <div key={movie.id} className="movie">
           <img className="poster" src={img_url + movie.poster_path} alt='' />
           <div className="over">
             <p>{movie.overview}</p>
