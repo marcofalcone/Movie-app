@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import Login from './components/Login'
 import Searchbox from "./components/Searchbox"
 import Movielist from './components/Movielist'
 
@@ -13,8 +12,8 @@ const App = (props) => {
 
   const [search, setSearch] = useState('')
 
-  const getMovie = async () => {
-    const url_default = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+  const getMovies = async () => {
+    const url_default = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"; //default list of movies
     const url = `https://api.themoviedb.org/3/search/movie?api_key=77de0ebb8c18224df76cf38477a907f5&query=${search}`;
 
     const response_default = await fetch(url_default);
@@ -23,7 +22,7 @@ const App = (props) => {
     const response = await fetch(url);
     const responseJson = await response.json();
 
-      if (responseJson.results) {
+      if (responseJson.results) {       //show default list of movies unless something is typed in the searchbox
       setMovies(responseJson.results)
     } else {
       setMovies(responseJson_default.results)
@@ -31,8 +30,8 @@ const App = (props) => {
   }
 
   useEffect(() => {
-    getMovie();
-  }, [search]);
+    getMovies();
+  }, [search]);    //run getMovies function when search value changes
 
   const addList = (movie) => {
     const newList = [...mylist, movie];
@@ -59,4 +58,3 @@ const App = (props) => {
 }
 
 export default App;
-// <Login />

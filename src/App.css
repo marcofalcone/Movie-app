@@ -116,6 +116,7 @@ html,body {
 
 .poster {
   height: 100%;
+  border-radius: 10px;
 }
 
 .over {
@@ -128,6 +129,7 @@ html,body {
   opacity: 0;
   color: white;
   border: 1px solid cornflowerblue;
+  border-radius: 10px;
   text-align: center;
   transition: .3s ease;
   display: flex;

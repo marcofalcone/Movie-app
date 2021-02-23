@@ -7,7 +7,7 @@ const Movielist = (props) => {
     document.getElementById('collection').scrollLeft += -1000;
   }
 
-  const img_url = "https://image.tmdb.org/t/p/w500"
+  const img_url = "https://image.tmdb.org/t/p/w500" // api address for poster img
 
   return (
   <div className="container">
