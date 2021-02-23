@@ -48,7 +48,7 @@ const App = (props) => {
   return (
     <div className="overlay">
     <div className="topbar">
-      <h1 className="header">SINEMA</h1>
+      <img className="header" src="logo.svg" alt="" />
       <Searchbox search={search} setSearch={setSearch} />
     </div>
         <Movielist title={"Movies"} movies={movies} handlelist={addList} function={"ADD TO LIST"} />

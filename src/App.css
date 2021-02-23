@@ -70,10 +70,8 @@ html,body {
 }
 
 .header {
-  font-size: 6vh;
-  color: cornflowerblue;
-  font-family: 'Poiret One', cursive;
-  font-weight: lighter;
+  height: 3vh;
+  margin: 30px;
 }
 
 .searchbox {
