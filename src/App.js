@@ -13,8 +13,8 @@ const App = (props) => {
   const [search, setSearch] = useState('')
 
   const getMovies = async () => {
-    const url_default = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"; //default list of movies
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=77de0ebb8c18224df76cf38477a907f5&query=${search}`;
+    const url_default = "https://api.themoviedb.org/3/discover/movie?api_key=<<api_key>>&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"; //default list of movies
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=${search}`;
 
     const response_default = await fetch(url_default);
     const responseJson_default = await response_default.json();
