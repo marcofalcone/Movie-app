@@ -1,10 +1,10 @@
 const Movielist = (props) => {
   const scroll_left = () => {
-    document.getElementById('collection').scrollLeft += 1000;
+    document.getElementById(props.id).scrollLeft += 1500;
   }
 
   const scroll_right = () => {
-    document.getElementById('collection').scrollLeft += -1000;
+    document.getElementById(props.id).scrollLeft += -1500;
   }
 
   const img_url = "https://image.tmdb.org/t/p/w500" // api address for poster img
@@ -14,7 +14,7 @@ const Movielist = (props) => {
     <header>{props.title}</header>
     <div className="left" onClick={scroll_right}>&#10094;</div>
     <div className="right" onClick={scroll_left}>&#10095;</div>
-    <div className="collection" id="collection">
+    <div className="collection" id={props.id}>
     {props.movies.map( movie =>
       <div key={movie.id} className="movie">
           <img className="poster" src={img_url + movie.poster_path} alt='' />

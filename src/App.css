@@ -45,47 +45,15 @@ html,body {
   overflow: auto;
 }
 
-.box {
-  position: absolute;
-  width: 40%;
-  height: 60%;
-  border: 1px solid cornflowerblue;
-  border-radius: 10px;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.divide {
-  height: 100%;
-  width: 1px;
-  background: cornflowerblue;
-  position: absolute;
-  left: 50%;
-}
-
-.topbar {
-  width: 95%;
-  height: auto;
-  left: 0;
-  right: 0;
-  margin: 50px auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
+.top {
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
-  height: 3vh;
-  margin: 30px;
+  height: 4vh;
+  margin: 50px;
 }
 
 .searchbox {
