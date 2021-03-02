@@ -9,10 +9,6 @@ In this second app built with React I covered some more advanced topics:
 
 API used for the project - https://www.themoviedb.org/
 
-Here's a preview of the project:
-
-![Desktop 2021 03 02 - 16 02 33 04 1-1](https://user-images.githubusercontent.com/61291681/109669376-50fa4800-7b72-11eb-8596-dee4f1043edf.gif)
-
 
 work by Marco Falcone
 
