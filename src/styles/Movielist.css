@@ -1,0 +1,177 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.collection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow-x: auto;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.movie {
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin-left: 40px;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+}
+
+.poster {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.over {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 10px;
+  height: 100%;
+  opacity: 0;
+  color: white;
+  border: 1px solid cornflowerblue;
+  border-radius: 10px;
+  text-align: center;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 20px;
+  overflow: auto;
+}
+
+.movie:hover {
+  -webkit-transform: scale(1.25);
+      -ms-transform: scale(1.25);
+          transform: scale(1.25);
+  z-index: 98;
+}
+
+.movie:hover > .over {
+  opacity: 1;
+}
+
+.over p:first-child {
+  text-align: justify;
+  font-style: italic;
+}
+
+.over p:last-child {
+  border: 1px solid cornflowerblue;
+  border-radius: 10px;
+  font-family: arial;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.over p:last-child:hover {
+  cursor: pointer;
+  background: cornflowerblue;
+}
+
+header {
+  font-family: arial;
+  color: white;
+  position: absolute;
+  top: 0;
+  font-size: 35px;
+  margin-left: 40px;
+}
+
+.left {
+  background: rgba(0, 0, 0, 0.3);
+  color: cornflowerblue;
+  position: -webkit-sticky;
+  position: sticky;
+  font-size: 50px;
+  z-index: 100;
+  height: 80%;
+  width: 3%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.right {
+  background: rgba(0, 0, 0, 0.3);
+  color: cornflowerblue;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 100%;
+  font-size: 50px;
+  z-index: 100;
+  height: 80%;
+  width: 3%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.left:hover,
+.right:hover {
+  background: rgba(0, 0, 0, 0.9);
+}

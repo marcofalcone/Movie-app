@@ -1,3 +1,5 @@
+import '../styles/Movielist.css'
+
 const Movielist = (props) => {
   const scroll_left = () => {
     document.getElementById(props.id).scrollLeft += 1500;
@@ -15,8 +17,8 @@ const Movielist = (props) => {
     <div className="left" onClick={scroll_right}>&#10094;</div>
     <div className="right" onClick={scroll_left}>&#10095;</div>
     <div className="collection" id={props.id}>
-    {props.movies.map( movie =>
-      <div key={movie.id} className="movie">
+    {props.movies.map( (movie, i) =>
+      <div key={i} className="movie">
           <img className="poster" src={img_url + movie.poster_path} alt='' />
           <div className="over">
             <p>{movie.overview}</p>
