@@ -6,7 +6,7 @@ const ResponsiveMovielist = (props) => {
   return (
   <div className="containerDevice">
     <header className="headerDevice">{props.title}</header>
-    <div className="collectionDevice" id={props.id}>
+    <div className="collectionDevice">
     {props.movies.map( (movie, i) =>
       <div key={i} className="movieDevice" onClick={() => props.toggle(movie)}>
           <img className="posterDevice" src={img_url + movie.poster_path} alt='' />

@@ -2,7 +2,7 @@ import '../styles/Movielist.css'
 
 const Movielist = (props) => {
   const scroll_left = () => {
-    document.getElementById(props.id).scrollLeft += 1500;
+    document.getElementById(props.id).scrollLeft += 1500; // see readme.md
   }
 
   const scroll_right = () => {
