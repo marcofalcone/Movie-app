@@ -1,6 +1,6 @@
 # React movie app
 
-A react movie app is not something very unique I know, you've probably already seen it somewhere on the internet but I am a huge movie fanatic and I could not resist to make one. I've applied a personal touch while still trying to resemble the most popular streaming platforms. This fully responsive app is connected to a public movie database and you can search for a specific movie, swipe through the genres and add your favorite movie to a list.
+A react movie app is not something very unique, I know, you've probably already seen it somewhere on the internet, but I am a huge movie fanatic and I could not resist to make one. I've applied a personal touch while still trying to make it resemble the most popular streaming platforms. This fully responsive app is connected to a public movie database and you can search for a specific movie, swipe through the genres and add your favorite movie to a list.
 
 In this second app built with React I covered some more advanced topics:
  - Hooks - UseState, UseEffect;
