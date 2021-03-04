@@ -9,17 +9,16 @@
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+  background: black;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: silver;
-  border-radius: 20px;
+  background-color: cornflowerblue;
+  border-radius: 5px;
 }
 
 html,body {
@@ -88,5 +87,16 @@ footer {
 
   .header {
     height: 3vh;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    background: rgb(0,0,0);
+    background: -o-linear-gradient(bottom, rgba(0,0,0,1) 90%, rgba(0,0,0,0.8) 100%);
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(90%, rgba(0,0,0,1)), to(rgba(0,0,0,0.8)));
+    background: linear-gradient(0deg, rgba(0,0,0,1) 80%, rgba(0,0,0,0.8) 100%);
+    overflow: auto;
   }
 }
