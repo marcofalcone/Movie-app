@@ -102,6 +102,9 @@
 
 .over p:last-child:hover {
   cursor: pointer;
+}
+
+.over p:last-child:active {
   background: cornflowerblue;
 }
 
