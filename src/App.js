@@ -26,9 +26,9 @@ const App = (props) => {
   const [mobileFunction, setFunction] = useState() //state for overlay handlelist function
 
   const getSearch = async () => {
-    const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+    const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
 
-    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=77de0ebb8c18224df76cf38477a907f5&query=${search}`;
+    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key={api-key}&query=${search}`;
 
     const response_MostPopular = await fetch(urlMostPopular);
     const responseJson_MostPopular = await response_MostPopular.json();
@@ -45,17 +45,17 @@ const App = (props) => {
 
   const getGenres = async () => {
 
-    const urlAction = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlAction = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
-    const urlComedy = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlComedy = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
-    const urlHorror = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlHorror = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
-    const urlRomance = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlRomance = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
-    const urlScifi = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlScifi = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
-    const urlThriller = "https://api.themoviedb.org/3/discover/movie?api_key=77de0ebb8c18224df76cf38477a907f5&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlThriller = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
 
     const response_Action = await fetch(urlAction);
     const responseJson_Action = await response_Action.json();
