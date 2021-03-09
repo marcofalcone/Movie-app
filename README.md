@@ -5,6 +5,18 @@
 A react movie app is not something very unique, I know, you've probably already seen it somewhere on the internet, but I am a huge movie fanatic and I could not resist to make one. I've applied a personal touch while still trying to make it resemble the most popular streaming platforms. This fully responsive app is connected to a public movie database and you can search for a specific movie, swipe through the genres and add your favorite movie to a list.
 API used for the project - https://www.themoviedb.org/
 
+## Use locally
+Download the repo and install node modules
+```bash
+npm install
+```
+
+Get an API key from https://www.themoviedb.org/ and replace {api-key} in App.js
+CD into the repo and run
+```bash
+npm start
+```
+
 ## Features covered in this app
  - Hooks - UseState, UseEffect;
  - API requests using asynchronous js - fetch(), async and await;
