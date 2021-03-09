@@ -11,7 +11,7 @@ Download the repo and install node modules
 npm install
 ```
 
-Get an API key from https://www.themoviedb.org/ and replace {api-key} in App.js
+Get an API key from https://www.themoviedb.org/ and replace {api-key} in App.js,
 CD into the repo and run
 ```bash
 npm start
