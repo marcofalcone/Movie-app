@@ -22,8 +22,9 @@ const App = (props) => {
 
   const [search, setSearch] = useState('')
 
-  const [mobileInfo, setMobile] = useState([]) //state for mobile popup
-  const [mobileFunction, setFunction] = useState() //state for overlay handlelist function
+  const [alert, setAlert] = useState(false) // state for alert
+  const [mobileInfo, setMobile] = useState([]) // state for mobile popup
+  const [mobileFunction, setFunction] = useState() // state for popup handlelist function
 
   const getSearch = async () => {
     const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
@@ -85,18 +86,21 @@ const App = (props) => {
 
     useEffect(() => {
       getSearch();
-    }, [search]);    //trigger getSearch function every time the search value changes
+    }, [search]);    // trigger getSearch function every time the search value changes
 
 
     useEffect(() => {
       getGenres();
-    }, []);   //trigger the getGenres only on the first render
+    }, []);   // trigger the getGenres only on the first render
 
   const addList = (movie) => {      // if movie is not present in the newList, add it
-    const newList = [...mylist]
-    const isPresent = mylist.some(item => movie.id === item.id)
-    if (!isPresent) newList.push(movie)
-    setMylist(newList)
+    const newList = [...mylist];
+    const isPresent = mylist.some(item => movie.id === item.id);
+    if (!isPresent) newList.push(movie);
+    setMylist(newList);
+    setAlert(true);
+    setTimeout(() =>
+    setAlert(false), 2000);
   }
 
   const removeList = (movie) => {   // filter out the selected item
@@ -106,7 +110,7 @@ const App = (props) => {
     setMylist(newList);
   }
 
-  const toggleAddMobile = (movie) => { //toggle mobile popup and set button function to addList
+  const toggleAddMobile = (movie) => { // toggle mobile popup and set button function to addList
     const showItem = []
     showItem.push(movie)
     setMobile(showItem)
@@ -116,7 +120,7 @@ const App = (props) => {
     })
   }
 
-  const toggleRemoveMobile = (movie) => { //toggle mobile popup and set button function to removeList
+  const toggleRemoveMobile = (movie) => { // toggle mobile popup and set button function to removeList
     const showItem = []
     showItem.push(movie)
     setMobile(showItem)
@@ -126,7 +130,7 @@ const App = (props) => {
     })
   }
 
-  const closeMobile = () => { //close mobile popup
+  const closeMobile = () => { // close mobile popup
     setMobile([])
   }
 
@@ -156,6 +160,21 @@ const App = (props) => {
              show && (props =>
                <animated.div className="popup" style={props}>
                <Mobileinfo movie={mobileInfo} close={closeMobile} handlelist={mobileFunction.action} function={mobileFunction.tag}  />
+               </animated.div>)
+           }
+        </Transition>
+        <Transition
+           native
+           items={alert}
+           from={{ opacity: 0 }}
+           enter={{ opacity: 1 }}
+           leave={{ opacity: 0 }}
+           config={{ duration: 100 }}
+           >
+           {show =>
+             show && (props =>
+               <animated.div className="alert" style={props}>
+                <p>ADDED TO LIST</p>
                </animated.div>)
            }
         </Transition>

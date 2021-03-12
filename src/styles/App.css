@@ -79,6 +79,20 @@ footer {
   border-top: 1px solid cornflowerblue;
 }
 
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 30px;
+  background: black;
+  color: white;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid cornflowerblue;
+}
+
 @media screen and (max-width: 1024px) {
 
   *::-webkit-scrollbar {
