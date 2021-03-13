@@ -26,6 +26,8 @@ const App = (props) => {
   const [mobileInfo, setMobile] = useState([]) // state for mobile popup
   const [mobileFunction, setFunction] = useState() // state for popup handlelist function
 
+  const [loading, setLoading] = useState(true)
+
   const getSearch = async () => {
     const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
 
@@ -82,12 +84,13 @@ const App = (props) => {
     setRomance(responseJson_Romance.results)
     setScifi(responseJson_Scifi.results)
     setThriller(responseJson_Thriller.results)
+
+    setLoading(false)
     }
 
     useEffect(() => {
       getSearch();
     }, [search]);    // trigger getSearch function every time the search value changes
-
 
     useEffect(() => {
       getGenres();
@@ -140,14 +143,14 @@ const App = (props) => {
         <img className="header" src="logo.svg" alt="" />
         <Searchbox search={search} setSearch={setSearch} />
       </div>
-        <Movielist toggle={toggleAddMobile} movies={movies} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
-        <Movielist toggle={toggleAddMobile} title={"Action"} movies={action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
-        <Movielist toggle={toggleAddMobile} title={"Comedy"} movies={comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
-        <Movielist toggle={toggleAddMobile} title={"Horror"} movies={horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
-        <Movielist toggle={toggleAddMobile} title={"Romance"} movies={romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
-        <Movielist toggle={toggleAddMobile} title={"Sci-fi"} movies={scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
-        <Movielist toggle={toggleAddMobile} title={"Thriller"} movies={thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
-        <Movielist toggle={toggleRemoveMobile} title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} id={"mylist"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} movies={movies} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
+        <Movielist loading={loading} toggle={toggleRemoveMobile} title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} id={"mylist"} />
         <Transition
            native
            items={mobileInfo}

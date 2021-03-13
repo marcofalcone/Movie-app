@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive'
 
+import Loader from './Loader'
+
 import '../styles/Movielist.css'
 import '../styles/ResponsiveMovielist.css'
 
@@ -31,7 +33,41 @@ const Movielist = (props) => {
             <div className="left" onClick={scroll_right}>&#10094;</div>
             <div className="right" onClick={scroll_left}>&#10095;</div>
               <div className="collection" id={props.id}>
-                {props.movies.map( (movie, i) =>
+              {props.loading && <>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                  <div className="movie">
+                    <Loader />
+                  </div>
+                </>
+              }
+                {!props.loading &&
+                props.movies.map( (movie, i) =>
                   <div key={i} className="movie">
                       <img className="poster" src={img_url + movie.poster_path} alt='' />
                       <div className="over">
@@ -48,7 +84,41 @@ const Movielist = (props) => {
         <div className="containerDevice">
           <header className="headerDevice">{props.title}</header>
             <div className="collectionDevice">
-            {props.movies.map( (movie, i) =>
+            {props.loading && <>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+                <div className="movieDevice">
+                  <Loader />
+                </div>
+              </>
+            }
+            {!props.loading &&
+              props.movies.map( (movie, i) =>
               <div key={i} className="movieDevice" onClick={() => props.toggle(movie)}>
                   <img className="posterDevice" src={img_url + movie.poster_path} alt='' />
               </div>

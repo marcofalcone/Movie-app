@@ -91,6 +91,7 @@ footer {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid cornflowerblue;
+  z-index: 100;
 }
 
 @media screen and (max-width: 1024px) {
