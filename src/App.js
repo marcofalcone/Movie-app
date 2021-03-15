@@ -9,24 +9,18 @@ import './styles/App.css'
 
 
 const App = (props) => {
-
-  const [action, setAction] = useState([])
-  const [comedy, setComedy] = useState([])
-  const [horror, setHorror] = useState([])
-  const [romance, setRomance] = useState([])
-  const [scifi, setScifi] = useState([])
-  const [thriller, setThriller] = useState([])
-
-  const [movies, setMovies] = useState([])
-  const [mylist, setMylist] = useState([])
-
   const [search, setSearch] = useState('')
 
-  const [alert, setAlert] = useState(false) // state for alert
+  const [movies, setMovies] = useState([])
+  const [genres, setGenre] = useState({})
+
+  const [mylist, setMylist] = useState([])
+  const [alert, setAlert] = useState(false)
+  const [isinList, setIsin] = useState(false)
+
   const [mobileInfo, setMobile] = useState([]) // state for mobile popup
   const [mobileFunction, setFunction] = useState() // state for popup handlelist function
-
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true) // state for loading spinner
 
   const getSearch = async () => {
     const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
@@ -78,12 +72,14 @@ const App = (props) => {
     const response_Thriller = await fetch(urlThriller);
     const responseJson_Thriller = await response_Thriller.json();
 
-    setAction(responseJson_Action.results)
-    setComedy(responseJson_Comedy.results)
-    setHorror(responseJson_Horror.results)
-    setRomance(responseJson_Romance.results)
-    setScifi(responseJson_Scifi.results)
-    setThriller(responseJson_Thriller.results)
+    setGenre({...genres,
+      action : responseJson_Action.results,
+      comedy : responseJson_Comedy.results,
+      horror : responseJson_Horror.results,
+      romance : responseJson_Romance.results,
+      scifi : responseJson_Scifi.results,
+      thriller : responseJson_Thriller.results,
+    })
 
     setLoading(false)
     }
@@ -96,14 +92,26 @@ const App = (props) => {
       getGenres();
     }, []);   // trigger the getGenres only on the first render
 
-  const addList = (movie) => {      // if movie is not present in the newList, add it
-    const newList = [...mylist];
-    const isPresent = mylist.some(item => movie.id === item.id);
-    if (!isPresent) newList.push(movie);
-    setMylist(newList);
+    const showAlert = () => {
     setAlert(true);
     setTimeout(() =>
-    setAlert(false), 2000);
+    setAlert(false), 800);
+  }
+
+  const addList = (movie) => {      // if movie is not present in the newList, add it
+    const newList = [...mylist];
+    const isPresent = mylist.some(item => movie.id === item.id); //The some() method tests whether at least one element in the array passes the test implemented by the provided function.
+    if (!isPresent) {
+    newList.push(movie);
+    setMylist(newList);
+    showAlert()
+  }
+    else {
+    setIsin(true)
+    showAlert()
+    setTimeout(() =>
+    setIsin(false), 850);
+  }
   }
 
   const removeList = (movie) => {   // filter out the selected item
@@ -144,12 +152,12 @@ const App = (props) => {
         <Searchbox search={search} setSearch={setSearch} />
       </div>
         <Movielist loading={loading} toggle={toggleAddMobile} movies={movies} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={genres.action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={genres.comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={genres.horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={genres.romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={genres.scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={genres.thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
         <Movielist loading={loading} toggle={toggleRemoveMobile} title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} id={"mylist"} />
         <Transition
            native
@@ -177,7 +185,7 @@ const App = (props) => {
            {show =>
              show && (props =>
                <animated.div className="alert" style={props}>
-                <p>ADDED TO LIST</p>
+                {!isinList ? <p>ADDED TO LIST</p> : <p>ALREADY ADDED</p>}
                </animated.div>)
            }
         </Transition>
