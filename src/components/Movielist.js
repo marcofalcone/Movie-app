@@ -12,7 +12,7 @@ const Movielist = (props) => {
   }
 
   const scroll_right = () => {
-    document.getElementById(props.id).scrollLeft += -1500;
+    document.getElementById(props.id).scrollLeft += -1500; // REDO
   }
 
   const img_url = "https://image.tmdb.org/t/p/w500" // api address for poster img
@@ -29,7 +29,7 @@ const Movielist = (props) => {
     <>
       {isDesktopOrLaptop &&
         <div className="container">
-          <header>{props.title}</header>
+          <span className="collectionTitle">{props.title}</span>
             <div className="left" onClick={scroll_right}>&#10094;</div>
             <div className="right" onClick={scroll_left}>&#10095;</div>
               <div className="collection" id={props.id}>
@@ -67,15 +67,17 @@ const Movielist = (props) => {
                 </>
               }
                 {!props.loading &&
-                props.movies.map( (movie, i) =>
-                  <div key={i} className="movie">
+                props.movies.map((movie, i) => // SHOW MOVIE ONLY IF THERE IS AN IMAGE
+                  movie.poster_path ? (
+                    <div key={i} className="movie">
                       <img className="poster" src={img_url + movie.poster_path} alt='' />
-                      <div className="over">
+                      {/* <div className="over">
                         <p>{movie.overview}</p>
                         <p>&#9734;{movie.vote_average}</p>
                         <p onClick={() => props.handlelist(movie)}>{props.function}</p>
-                      </div>
+                      </div> */}
                   </div>
+                  ) : null
                 )}
               </div>
         </div>

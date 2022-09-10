@@ -1,7 +1,7 @@
 .container {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 400px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -29,11 +29,12 @@
 .movie {
   position: relative;
   width: auto;
-  height: 80%;
+  height: 70%;
   margin-left: 40px;
   -webkit-transition: .3s ease;
   -o-transition: .3s ease;
   transition: .3s ease;
+  cursor: pointer;
 }
 
 .poster {
@@ -72,9 +73,9 @@
 }
 
 .movie:hover {
-  -webkit-transform: scale(1.25);
-      -ms-transform: scale(1.25);
-          transform: scale(1.25);
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
   z-index: 98;
 }
 
@@ -108,12 +109,12 @@
   background: cornflowerblue;
 }
 
-header {
+.collectionTitle {
   font-family: arial;
   color: white;
   position: absolute;
-  top: 0;
-  font-size: 35px;
+  top: 15px;
+  font-size: 25px;
   margin-left: 40px;
 }
 
@@ -124,7 +125,7 @@ header {
   position: sticky;
   font-size: 50px;
   z-index: 100;
-  height: 80%;
+  height: 70%;
   width: 3%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -153,7 +154,7 @@ header {
   left: 100%;
   font-size: 50px;
   z-index: 100;
-  height: 80%;
+  height: 70%;
   width: 3%;
   display: -webkit-box;
   display: -ms-flexbox;

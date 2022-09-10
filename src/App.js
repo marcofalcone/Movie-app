@@ -8,51 +8,65 @@ import Mobileinfo from './components/Mobileinfo'
 import './styles/App.css'
 
 
-const App = (props) => {
+const App = () => {
   const [search, setSearch] = useState('')
 
-  const [movies, setMovies] = useState([])
-  const [genres, setGenre] = useState({})
+  const [movies, setMovies] = useState({
+    popular: [],
+    searched: [],
+    genres: {
+      action : [],
+      comedy : [],
+      horror : [],
+      romance : [],
+      scifi : [],
+      thriller : [],
+    }
+  })
+
+  const {
+    popular,
+    searched,
+    genres,
+  } = movies;
+
+  const {
+    action,
+    comedy,
+    horror,
+    romance,
+    scifi,
+    thriller,
+  } = genres;
 
   const [mylist, setMylist] = useState([])
   const [alert, setAlert] = useState(false)
   const [isinList, setIsin] = useState(false)
+  const [mobileInfo, setMobile] = useState([])
+  const [mobileFunction, setFunction] = useState()
+  const [loading, setLoading] = useState(true)
 
-  const [mobileInfo, setMobile] = useState([]) // state for mobile popup
-  const [mobileFunction, setFunction] = useState() // state for popup handlelist function
-  const [loading, setLoading] = useState(true) // state for loading spinner
+  const apiKey = "77de0ebb8c18224df76cf38477a907f5";
+  // const getSuggestedForYou
 
-  const getSearch = async () => {
-    const urlMostPopular = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
-
-    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key={api-key}&query=${search}`;
-
-    const response_MostPopular = await fetch(urlMostPopular);
-    const responseJson_MostPopular = await response_MostPopular.json();
-
+  const getSearched = async () => {
+    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${search}`;
     const response_Search = await fetch(urlSearch);
     const responseJson_Search = await response_Search.json();
-
-      if (responseJson_Search.results) {       // set most popular list as default and change it when receiving user input
-      setMovies(responseJson_Search.results)
-    } else {
-      setMovies(responseJson_MostPopular.results)
-    }
+    if (responseJson_Search?.results) setMovies({
+      ...movies,
+      searched: responseJson_Search.results
+    })
   }
 
-  const getGenres = async () => {
+  const getMovies = async () => {
 
-    const urlAction = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
-
-    const urlComedy = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
-
-    const urlHorror = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
-
-    const urlRomance = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
-
-    const urlScifi = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
-
-    const urlThriller = "https://api.themoviedb.org/3/discover/movie?api_key={api-key}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22";
+    const urlAction = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlComedy = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlHorror = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlRomance = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlScifi = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlThriller = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
 
     const response_Action = await fetch(urlAction);
     const responseJson_Action = await response_Action.json();
@@ -72,35 +86,43 @@ const App = (props) => {
     const response_Thriller = await fetch(urlThriller);
     const responseJson_Thriller = await response_Thriller.json();
 
-    setGenre({...genres,
-      action : responseJson_Action.results,
-      comedy : responseJson_Comedy.results,
-      horror : responseJson_Horror.results,
-      romance : responseJson_Romance.results,
-      scifi : responseJson_Scifi.results,
-      thriller : responseJson_Thriller.results,
-    })
+    const urlMostPopular = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+    const response_MostPopular = await fetch(urlMostPopular);
+    const responseJson_MostPopular = await response_MostPopular.json();
 
-    setLoading(false)
-    }
+    if (responseJson_Action
+      && responseJson_Comedy
+      && responseJson_Horror
+      && responseJson_Romance
+      && responseJson_Scifi
+      && responseJson_Thriller
+      && responseJson_MostPopular?.results) {
+        setMovies({
+          ...movies,
+          popular: responseJson_MostPopular.results,
+          genres: {
+            action : responseJson_Action?.results,
+            comedy : responseJson_Comedy?.results,
+            horror : responseJson_Horror?.results,
+            romance : responseJson_Romance?.results,
+            scifi : responseJson_Scifi?.results,
+            thriller : responseJson_Thriller?.results,
+          }
+        })
+      }
 
-    useEffect(() => {
-      getSearch();
-    }, [search]);    // trigger getSearch function every time the search value changes
+      setLoading(false)
+  }
 
-    useEffect(() => {
-      getGenres();
-    }, []);   // trigger the getGenres only on the first render
-
-    const showAlert = () => {
+  const showAlert = () => {
     setAlert(true);
     setTimeout(() =>
     setAlert(false), 800);
   }
 
-  const addList = (movie) => {      // if movie is not present in the newList, add it
+  const addList = (movie) => {      
     const newList = [...mylist];
-    const isPresent = mylist.some(item => movie.id === item.id); //The some() method tests whether at least one element in the array passes the test implemented by the provided function.
+    const isPresent = mylist.some(item => movie.id === item.id);
     if (!isPresent) {
     newList.push(movie);
     setMylist(newList);
@@ -114,14 +136,14 @@ const App = (props) => {
   }
   }
 
-  const removeList = (movie) => {   // filter out the selected item
+  const removeList = (movie) => {
     const newList = mylist.filter(
       item => item.id !== movie.id
     );
     setMylist(newList);
   }
 
-  const toggleAddMobile = (movie) => { // toggle mobile popup and set button function to addList
+  const toggleAddMobile = (movie) => {
     const showItem = []
     showItem.push(movie)
     setMobile(showItem)
@@ -131,7 +153,7 @@ const App = (props) => {
     })
   }
 
-  const toggleRemoveMobile = (movie) => { // toggle mobile popup and set button function to removeList
+  const toggleRemoveMobile = (movie) => {
     const showItem = []
     showItem.push(movie)
     setMobile(showItem)
@@ -141,23 +163,33 @@ const App = (props) => {
     })
   }
 
-  const closeMobile = () => { // close mobile popup
+  const closeMobile = () => {
     setMobile([])
   }
 
+  useEffect(() => {
+    getMovies();
+  }, [])
+
+  useEffect(() => {
+    if (search) getSearched();
+  }, [search])
+
   return (
     <div className="overlay">
-      <div className="top">
-        <img className="header" src="logo.svg" alt="" />
-        <Searchbox search={search} setSearch={setSearch} />
-      </div>
-        <Movielist loading={loading} toggle={toggleAddMobile} movies={movies} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={genres.action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={genres.comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={genres.horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={genres.romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={genres.scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={genres.thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
+      {apiKey ? (
+        <>
+        <div className="topBar">
+          <img className="logo" src="logo.svg" alt="" />
+          <Searchbox search={search} setSearch={setSearch} />
+        </div>
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Trending Now"} movies={popular} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
+        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
         <Movielist loading={loading} toggle={toggleRemoveMobile} title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} id={"mylist"} />
         <Transition
            native
@@ -169,7 +201,7 @@ const App = (props) => {
            >
            {show =>
              show && (props =>
-               <animated.div className="popup" style={props}>
+              <animated.div className="popup" style={props}>
                <Mobileinfo movie={mobileInfo} close={closeMobile} handlelist={mobileFunction.action} function={mobileFunction.tag}  />
                </animated.div>)
            }
@@ -184,11 +216,15 @@ const App = (props) => {
            >
            {show =>
              show && (props =>
-               <animated.div className="alert" style={props}>
+              <animated.div className="alert" style={props}>
                 {!isinList ? <p>ADDED TO LIST</p> : <p>ALREADY ADDED</p>}
                </animated.div>)
            }
         </Transition>
+           </>
+      ) : (
+        <h1>YOU NEED TO SET AN API KEY FIRST</h1>
+      )}
   <footer>Work by Marco Falcone</footer>
   </div>
   )

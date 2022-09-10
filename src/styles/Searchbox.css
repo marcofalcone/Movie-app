@@ -1,13 +1,27 @@
 .searchbox {
-  width: 400px;
-  height: 50px;
+  width: 300px;
+  height: 30px;
   background: transparent;
   color: white;
-  border: 0;
-  border-bottom: 1px solid cornflowerblue;
-  font-size: 30px;
-  text-align: center;
+  border: 1px solid cornflowerblue;
+  font-size: 20px;
   outline: none;
+  padding: 0 10px;
+  margin-right: 20px;
+}
+
+.userLogo {
+  width: 30px;
+  cursor: pointer;
+}
+
+.topRight {
+  display: flex;
+  margin: 10px 40px 0 0;
+}
+
+.userLogo:hover {
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 1024px) {

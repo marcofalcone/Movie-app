@@ -9,7 +9,7 @@
 }
 
 *::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -18,7 +18,7 @@
 
 *::-webkit-scrollbar-thumb {
   background-color: cornflowerblue;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 html,body {
@@ -34,28 +34,24 @@ html,body {
   width: 100%;
   height: auto;
   background: rgb(0,0,0);
-  background: -o-linear-gradient(bottom, rgba(0,0,0,1) 90%, rgba(0,0,0,0.8) 100%);
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(90%, rgba(0,0,0,1)), to(rgba(0,0,0,0.8)));
-  background: linear-gradient(0deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0.8) 100%);
+  background: -o-linear-gradient(bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0.7) 100%);
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(70%, rgba(0,0,0,1)), to(rgba(0,0,0,0.7)));
+  background: linear-gradient(0deg, rgba(0,0,0,1) 70%, rgba(0,0,0,0.7) 100%);
   overflow: auto;
 }
 
-.top {
+.topBar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 100px;
 }
 
-.header {
-  height: 4vh;
-  margin: 50px;
+.logo {
+  height: 2vh;
+  margin-left: 40px;
 }
 
 footer {
