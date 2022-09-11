@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Transition, animated } from 'react-spring/renderprops'
-
+import Homepage from './views/Homepage';
+import SearchPage from "./views/SearchPage"
+import { BrowserRouter, Switch, Route, Redirect, useHistory } from "react-router-dom";
 import Searchbox from "./components/Searchbox"
-import Movielist from './components/Movielist'
-import Mobileinfo from './components/Mobileinfo'
-
-import './styles/App.css'
-
 
 const App = () => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("")
+  const [isFetching, setIsFetching] = useState(true)
 
   const [movies, setMovies] = useState({
     popular: [],
@@ -24,30 +21,9 @@ const App = () => {
     }
   })
 
-  const {
-    popular,
-    searched,
-    genres,
-  } = movies;
-
-  const {
-    action,
-    comedy,
-    horror,
-    romance,
-    scifi,
-    thriller,
-  } = genres;
-
-  const [mylist, setMylist] = useState([])
-  const [alert, setAlert] = useState(false)
-  const [isinList, setIsin] = useState(false)
-  const [mobileInfo, setMobile] = useState([])
-  const [mobileFunction, setFunction] = useState()
-  const [loading, setLoading] = useState(true)
+  const history = useHistory()
 
   const apiKey = "77de0ebb8c18224df76cf38477a907f5";
-  // const getSuggestedForYou
 
   const getSearched = async () => {
     const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${search}`;
@@ -111,60 +87,7 @@ const App = () => {
         })
       }
 
-      setLoading(false)
-  }
-
-  const showAlert = () => {
-    setAlert(true);
-    setTimeout(() =>
-    setAlert(false), 800);
-  }
-
-  const addList = (movie) => {      
-    const newList = [...mylist];
-    const isPresent = mylist.some(item => movie.id === item.id);
-    if (!isPresent) {
-    newList.push(movie);
-    setMylist(newList);
-    showAlert()
-  }
-    else {
-    setIsin(true)
-    showAlert()
-    setTimeout(() =>
-    setIsin(false), 850);
-  }
-  }
-
-  const removeList = (movie) => {
-    const newList = mylist.filter(
-      item => item.id !== movie.id
-    );
-    setMylist(newList);
-  }
-
-  const toggleAddMobile = (movie) => {
-    const showItem = []
-    showItem.push(movie)
-    setMobile(showItem)
-    setFunction({
-      tag : 'ADD TO LIST',
-      action : addList
-    })
-  }
-
-  const toggleRemoveMobile = (movie) => {
-    const showItem = []
-    showItem.push(movie)
-    setMobile(showItem)
-    setFunction({
-      tag : 'REMOVE FROM LIST',
-      action : removeList
-    })
-  }
-
-  const closeMobile = () => {
-    setMobile([])
+      setIsFetching(false)
   }
 
   useEffect(() => {
@@ -172,62 +95,33 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (search) getSearched();
+    if (search) {
+      getSearched();
+      history.push(`/search?${search}`);
+    } else {
+      history.push("/")
+    }
   }, [search])
 
   return (
-    <div className="overlay">
-      {apiKey ? (
-        <>
-        <div className="topBar">
-          <img className="logo" src="logo.svg" alt="" />
-          <Searchbox search={search} setSearch={setSearch} />
-        </div>
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Trending Now"} movies={popular} handlelist={addList} function={"ADD TO LIST"} id={"search"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Action"} movies={action} handlelist={addList} function={"ADD TO LIST"} id={"action"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Comedy"} movies={comedy} handlelist={addList} function={"ADD TO LIST"} id={"comedy"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Horror"} movies={horror} handlelist={addList} function={"ADD TO LIST"} id={"horror"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Romance"} movies={romance} handlelist={addList} function={"ADD TO LIST"} id={"romance"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Sci-fi"} movies={scifi} handlelist={addList} function={"ADD TO LIST"} id={"scifi"} />
-        <Movielist loading={loading} toggle={toggleAddMobile} title={"Thriller"} movies={thriller} handlelist={addList} function={"ADD TO LIST"} id={"thriller"} />
-        <Movielist loading={loading} toggle={toggleRemoveMobile} title={"My list"} movies={mylist} handlelist={removeList} function={"REMOVE FROM LIST"} id={"mylist"} />
-        <Transition
-           native
-           items={mobileInfo}
-           from={{ opacity: 0, height: 0}}
-           enter={{ opacity: 1, height: 500 }}
-           leave={{ opacity: 0, height: 0 }}
-           config={{ duration: 200 }}
-           >
-           {show =>
-             show && (props =>
-              <animated.div className="popup" style={props}>
-               <Mobileinfo movie={mobileInfo} close={closeMobile} handlelist={mobileFunction.action} function={mobileFunction.tag}  />
-               </animated.div>)
-           }
-        </Transition>
-        <Transition
-           native
-           items={alert}
-           from={{ opacity: 0 }}
-           enter={{ opacity: 1 }}
-           leave={{ opacity: 0 }}
-           config={{ duration: 100 }}
-           >
-           {show =>
-             show && (props =>
-              <animated.div className="alert" style={props}>
-                {!isinList ? <p>ADDED TO LIST</p> : <p>ALREADY ADDED</p>}
-               </animated.div>)
-           }
-        </Transition>
-           </>
-      ) : (
-        <h1>YOU NEED TO SET AN API KEY FIRST</h1>
-      )}
-  <footer>Work by Marco Falcone</footer>
-  </div>
+    <div className='mainWrapper'>
+    <div className="topBar">
+      <img className="logo" src="logo.svg" alt="" />
+      <Searchbox setSearch={setSearch} />
+    </div>
+      <Switch>
+        <Route exact path="/">
+          <Homepage movies={movies} isFetching={isFetching} />
+        </Route>
+        <Route path="/search">
+          <SearchPage movies={movies.searched} />
+        </Route>
+        <Route path="/detail">
+          <SearchPage movies={movies.searched} />
+        </Route>
+      </Switch>
+    </div>
   )
 }
 
-export default App;
+export default App

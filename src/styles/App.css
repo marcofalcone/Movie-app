@@ -29,7 +29,7 @@ html,body {
   height: 100%;
 }
 
-.overlay {
+.mainWrapper {
   position: absolute;
   width: 100%;
   height: auto;
@@ -52,13 +52,6 @@ html,body {
 .logo {
   height: 2vh;
   margin-left: 40px;
-}
-
-footer {
-  color: white;
-  text-align: center;
-  font-family: arial;
-  font-size: 20px;
 }
 
 .popup {
