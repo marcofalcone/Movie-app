@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Homepage from './views/Homepage';
 import SearchPage from "./views/SearchPage"
-import { BrowserRouter, Switch, Route, Redirect, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, Link } from "react-router-dom";
 import Searchbox from "./components/Searchbox"
+import DetailMovie from './views/DetailMovie';
+import DetailList from './views/DetailList';
 
 const App = () => {
   const [search, setSearch] = useState("")
@@ -37,12 +39,12 @@ const App = () => {
 
   const getMovies = async () => {
 
-    const urlAction = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
-    const urlComedy = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
-    const urlHorror = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
-    const urlRomance = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
-    const urlScifi = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
-    const urlThriller = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=false&page=1%22`;
+    const urlAction = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
+    const urlComedy = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=35&ssort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
+    const urlHorror = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=27&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
+    const urlRomance = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=10749&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
+    const urlScifi = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=878&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
+    const urlThriller = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
 
     const response_Action = await fetch(urlAction);
     const responseJson_Action = await response_Action.json();
@@ -106,7 +108,9 @@ const App = () => {
   return (
     <div className='mainWrapper'>
     <div className="topBar">
-      <img className="logo" src="logo.svg" alt="" />
+      <Link to="/">
+        <img className="logo" src="logo.svg" alt="" />
+      </Link>
       <Searchbox setSearch={setSearch} />
     </div>
       <Switch>
@@ -116,8 +120,11 @@ const App = () => {
         <Route path="/search">
           <SearchPage movies={movies.searched} />
         </Route>
-        <Route path="/detail">
-          <SearchPage movies={movies.searched} />
+        <Route path="/detailMovie">
+          <DetailMovie />
+        </Route>
+        <Route path="/detailList">
+          <DetailList />
         </Route>
       </Switch>
     </div>

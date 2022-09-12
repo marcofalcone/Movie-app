@@ -116,6 +116,15 @@
   top: 15px;
   font-size: 25px;
   margin-left: 40px;
+  cursor: pointer;
+  z-index: 999;
+  -webkit-transition: .3s ease;
+  -o-transition: .3s ease;
+  transition: .3s ease;
+}
+
+.collectionTitle:hover {
+  color: cornflowerblue;
 }
 
 .left {

@@ -32,11 +32,9 @@ html,body {
 .mainWrapper {
   position: absolute;
   width: 100%;
+  min-height: 100vh;
   height: auto;
-  background: rgb(0,0,0);
-  background: -o-linear-gradient(bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0.7) 100%);
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(70%, rgba(0,0,0,1)), to(rgba(0,0,0,0.7)));
-  background: linear-gradient(0deg, rgba(0,0,0,1) 70%, rgba(0,0,0,0.7) 100%);
+  background: rgb(0,0,0, 0.8);
   overflow: auto;
 }
 

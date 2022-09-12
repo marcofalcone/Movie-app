@@ -1,0 +1,28 @@
+.detailPoster {
+  height: 700px;
+  float: left;
+  margin-right: 10px;
+  padding: 5px;
+  border-right: 1px solid cornflowerblue;
+}
+
+.info {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 20px;
+  font-style: italic;
+  color: white;
+  text-align: justify;
+  overflow: auto;
+}
+
+.detailWrapper {
+  width: 100%;
+  height: auto;
+  padding: 0 100px;
+}
