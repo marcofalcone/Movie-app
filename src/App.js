@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Homepage from './views/Homepage';
-import SearchPage from "./views/SearchPage"
-import { Switch, Route, useHistory, Link } from "react-router-dom";
-import Searchbox from "./components/Searchbox"
+import SearchPage from './views/SearchPage';
+import { Switch, Route, Link } from 'react-router-dom';
+import Searchbox from './components/Searchbox';
 import DetailMovie from './views/DetailMovie';
 import DetailList from './views/DetailList';
+import { Context } from './index';
+import homeLogo from './assets/logo.svg';
+import LoginPage from './views/LoginPage';
 
 const App = () => {
-  const [search, setSearch] = useState("")
-  const [isFetching, setIsFetching] = useState(true)
+  const { apiKey } = useContext(Context);
+  const [isFetching, setIsFetching] = useState(true);
 
   const [movies, setMovies] = useState({
     popular: [],
@@ -21,21 +24,7 @@ const App = () => {
       scifi : [],
       thriller : [],
     }
-  })
-
-  const history = useHistory()
-
-  const apiKey = "77de0ebb8c18224df76cf38477a907f5";
-
-  const getSearched = async () => {
-    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${search}`;
-    const response_Search = await fetch(urlSearch);
-    const responseJson_Search = await response_Search.json();
-    if (responseJson_Search?.results) setMovies({
-      ...movies,
-      searched: responseJson_Search.results
-    })
-  }
+  });
 
   const getMovies = async () => {
 
@@ -75,60 +64,59 @@ const App = () => {
       && responseJson_Scifi
       && responseJson_Thriller
       && responseJson_MostPopular?.results) {
-        setMovies({
-          ...movies,
-          popular: responseJson_MostPopular.results,
-          genres: {
-            action : responseJson_Action?.results,
-            comedy : responseJson_Comedy?.results,
-            horror : responseJson_Horror?.results,
-            romance : responseJson_Romance?.results,
-            scifi : responseJson_Scifi?.results,
-            thriller : responseJson_Thriller?.results,
-          }
-        })
-      }
+      setMovies({
+        ...movies,
+        popular: responseJson_MostPopular.results,
+        genres: {
+          action : responseJson_Action?.results,
+          comedy : responseJson_Comedy?.results,
+          horror : responseJson_Horror?.results,
+          romance : responseJson_Romance?.results,
+          scifi : responseJson_Scifi?.results,
+          thriller : responseJson_Thriller?.results,
+        }
+      });
+    }
 
-      setIsFetching(false)
-  }
+    setIsFetching(false);
+  };
 
   useEffect(() => {
     getMovies();
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    if (search) {
-      getSearched();
-      history.push(`/search?${search}`);
-    } else {
-      history.push("/")
-    }
-  }, [search])
+  const isLogged = true;
 
   return (
     <div className='mainWrapper'>
-    <div className="topBar">
-      <Link to="/">
-        <img className="logo" src="logo.svg" alt="" />
-      </Link>
-      <Searchbox setSearch={setSearch} />
+      {isLogged ? (
+        <>
+          <div className="topBar">
+            <Link to="/">
+              <img className="logo" src={homeLogo} alt="" />
+            </Link>
+            <Searchbox />
+          </div>
+          <Switch>
+            <Route exact path="/">
+              <Homepage movies={movies} isFetching={isFetching} />
+            </Route>
+            <Route path="/search/:search">
+              <SearchPage movies={movies.searched} />
+            </Route>
+            <Route path="/detailMovie/:id">
+              <DetailMovie />
+            </Route>
+            <Route path="/detailList/:id">
+              <DetailList />
+            </Route>
+          </Switch>
+        </>
+      ) : (
+        <LoginPage />
+      )}
     </div>
-      <Switch>
-        <Route exact path="/">
-          <Homepage movies={movies} isFetching={isFetching} />
-        </Route>
-        <Route path="/search">
-          <SearchPage movies={movies.searched} />
-        </Route>
-        <Route path="/detailMovie">
-          <DetailMovie />
-        </Route>
-        <Route path="/detailList">
-          <DetailList />
-        </Route>
-      </Switch>
-    </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -1,0 +1,19 @@
+.loginWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginLogo {
+  height: 4vh;
+  margin-bottom: 30px;
+}
+
+.loginBox {
+  border: 1px solid cornflowerblue;
+  width: 30%;
+  height: 60%;
+}

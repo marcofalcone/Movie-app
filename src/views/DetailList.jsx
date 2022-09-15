@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 
-import '../styles/Detail.css'
+import '../styles/Detail.css';
 
 const DetailList = () => {
 
@@ -11,14 +11,14 @@ const DetailList = () => {
 
   return (
     <>
-      <h1 style={{ color: "white", marginLeft: "30px" }}>{title}</h1>
+      <h1 style={{ color: 'white', marginLeft: '30px' }}>{title}</h1>
       <div className='gridPage'>
         {movies?.length ? movies?.map((movie, i) => (
-        <MovieCard isSearch key={i} movie={movie} />
+          <MovieCard isSearch key={i} movie={movie} />
         )) : null}
       </div>
     </>
-  )
-}
+  );
+};
 
 export default DetailList;
