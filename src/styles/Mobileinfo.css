@@ -17,10 +17,10 @@
   font-family: arial;
   color: white;
   padding: 10px;
-  border: 1px solid cornflowerblue;
+  border: 1px solid #04b4e3;
   border-radius: 10px;
 }
 
 .button:active {
-  background-color: cornflowerblue;
+  background-color: #04b4e3;
 }

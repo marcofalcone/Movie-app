@@ -1,4 +1,5 @@
-import '../styles/Loader.css'
+import React from 'react';
+import '../styles/Loader.css';
 
 const Loader = () => (
   <div className="loadcont">
@@ -13,6 +14,6 @@ const Loader = () => (
       <div></div>
     </div>
   </div>
-)
+);
 
-export default Loader
+export default Loader;

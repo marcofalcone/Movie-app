@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "react": "^17.0.1",
+    "react-detect-click-outside": "^1.1.7",
     "react-dom": "^17.0.1",
     "react-responsive": "^8.2.0",
     "react-router-dom": "5.3.3",

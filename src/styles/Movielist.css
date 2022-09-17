@@ -52,7 +52,7 @@
   height: 100%;
   opacity: 0;
   color: white;
-  border: 1px solid cornflowerblue;
+  border: 1px solid #04b4e3;
   border-radius: 10px;
   text-align: center;
   -webkit-transition: .3s ease;
@@ -89,7 +89,7 @@
 }
 
 .over p:last-child {
-  border: 1px solid cornflowerblue;
+  border: 1px solid #04b4e3;
   border-radius: 10px;
   font-family: arial;
   -webkit-transition: .3s ease;
@@ -106,7 +106,7 @@
 }
 
 .over p:last-child:active {
-  background: cornflowerblue;
+  background: #04b4e3;
 }
 
 .collectionTitle {
@@ -124,12 +124,12 @@
 }
 
 .collectionTitle:hover {
-  color: cornflowerblue;
+  color: #04b4e3;
 }
 
 .left {
   background: rgba(0, 0, 0, 0.3);
-  color: cornflowerblue;
+  color: #04b4e3;
   position: -webkit-sticky;
   position: sticky;
   font-size: 30px;
@@ -157,7 +157,7 @@
 
 .right {
   background: rgba(0, 0, 0, 0.3);
-  color: cornflowerblue;
+  color: #04b4e3;
   position: -webkit-sticky;
   position: sticky;
   left: 100%;
