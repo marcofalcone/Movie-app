@@ -26,6 +26,15 @@ const App = () => {
     }
   });
 
+
+  const test = async () => {
+    const res = await fetch('/api/test');
+    const json = await res.json();
+    console.log(json);
+  };
+
+  test();
+
   const getMovies = async () => {
 
     const urlAction = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
