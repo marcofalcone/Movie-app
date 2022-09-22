@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "server",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index"
@@ -18,6 +19,9 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "@fastify/mongodb": "^6.1.0",
+    "dotenv": "^16.0.2",
+    "fastify": "^4.6.0",
+    "fastify-plugin": "^4.2.1"
   }
 }

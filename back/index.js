@@ -1,11 +1,22 @@
-const express = require('express');
+import * as dotenv from 'dotenv'
+dotenv.config()
+import Fastify from 'fastify';
+import routes from './routes.js';
+import dbConnector from './plugins/dbConnector.js';
 
-const app = express();
-
-app.get('/api/test', (req, res) => {
-  res.json({ test: 'test' });
+const fastify = Fastify({
+  logger: true
 });
 
-const port = process.env.PORT || 5000;
+fastify.register(dbConnector);
+fastify.register(routes);
 
-app.listen(port, () => console.log('server running'));
+// Run the server!
+fastify.listen({ port: process.env.PORT }, (err, address) => {
+  if (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  } else {
+    console.log('server started ...');
+  }
+});

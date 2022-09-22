@@ -16,6 +16,36 @@ const DetailMovie = () => {
   
   const [trailer, setTrailer] = useState('');
   const [watchTrailer, setWatchTrailer] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+
+  const addFavorite = async () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        poster_path: poster,
+        overview,
+        vote_average: vote,
+        release_date: date,
+        title,
+        id
+      })
+    };
+    await fetch('/api/movies/favorites', requestOptions);
+  };
+
+  const removeFavorite = async () => {
+    const requestOptions = {
+      method: 'DELETE',
+    };
+    await fetch(`/api/movies/favorites/${id}`, requestOptions);
+  };
+
+  const getFavorites = async () => {
+    const res = await fetch('/api/movies/favorites');
+    const resJson = await res.json();
+    setFavorites(resJson);
+  };
   
   const getTrailer = async () => {
     const urlVideos = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`;
@@ -27,10 +57,9 @@ const DetailMovie = () => {
     }
   };
 
-  useEffect(() => {
-    getTrailer();
-  }, [id]);
+  const isMovieInFavorites = favorites.some((movie) => movie?.id === id);
 
+  
   const ModalTrailer = () => {
     const ref = useDetectClickOutside({ onTriggered: () => setWatchTrailer(false) });
 
@@ -53,6 +82,11 @@ const DetailMovie = () => {
     );
   };
 
+  useEffect(() => {
+    getTrailer();
+    getFavorites();
+  }, []);
+
   return (
     <>
       <div className='detailWrapper'>
@@ -64,7 +98,11 @@ const DetailMovie = () => {
             <p>{overview}</p>
             <span style={{ fontSize: '30px' }}>{vote}&#x2605;</span>
             {trailer ? <p onClick={() => setWatchTrailer(true)} className='detailAction'>Watch Trailer &#9658;</p> : null}
-            <p className='detailAction'>Add to favorites &#x2b;</p>
+            {isMovieInFavorites ? (
+              <p onClick={() => removeFavorite()} className='detailAction'>Remove from favorites &#x2b;</p>
+            ) : (
+              <p onClick={() => addFavorite()} className='detailAction'>Add to favorites &#x2b;</p>
+            )}
           </div>
         </div>
       </div>

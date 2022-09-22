@@ -1,0 +1,15 @@
+GET http://localhost:5000/api/movies/favorites
+
+###
+
+POST http://localhost:5000/api/movies/favorites
+content-type: application/json
+
+{
+    "name": "top gun",
+    "id": "985939"
+}
+
+###
+
+DELETE http://localhost:5000/api/movies/favorites/985939
