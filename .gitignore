@@ -1,11 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-front/node_modules
-front/package-lock.json
-
-# testing
-front/coverage
+movie-app-react/node_modules
+movie-app-react/package-lock.json
 
 # production
 front/build
@@ -21,6 +18,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-back/.env
-back/package-lock.json
-back/node_modules
+movie-app-fastify/.env
+movie-app-fastify/package-lock.json
+movie-app-fastify/node_modules

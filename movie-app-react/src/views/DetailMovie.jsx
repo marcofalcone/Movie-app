@@ -34,8 +34,6 @@ const DetailMovie = () => {
     await fetch('/api/movies/favorites', requestOptions);
   };
 
-  console.log(poster);
-
   const removeFavorite = async () => {
     const requestOptions = {
       method: 'DELETE',
