@@ -3,8 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
 import { useHistory } from 'react-router-dom';
 import { Context } from '..';
+import { ToastContainer } from 'react-toastify';
 
 import '../styles/Detail.css';
+import Alert from '../components/Alert';
 
 const DetailMovie = () => {
   const { apiKey } = useContext(Context);
@@ -13,12 +15,31 @@ const DetailMovie = () => {
   const {
     poster, overview, vote, date, title, id
   } = history.location.state;
+
+  const {
+    notifySuccess,
+    notifyError,
+    notifyWarning
+  } = Alert();
   
   const [trailer, setTrailer] = useState('');
   const [watchTrailer, setWatchTrailer] = useState(false);
   const [favorites, setFavorites] = useState([]);
 
+  const isMovieInFavorites = favorites.some((movie) => movie?.id === id);
+
+  const getFavorites = async () => {
+    const res = await fetch('/api/movies/favorites');
+    const resJson = await res.json();
+    if (res.status === 200) setFavorites(resJson);
+    else notifyError();
+  };
+
   const addFavorite = async () => {
+    if (isMovieInFavorites) {
+      notifyWarning('Movie is already in your list');
+      return;
+    }
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -31,20 +52,24 @@ const DetailMovie = () => {
         id
       })
     };
-    await fetch('/api/movies/favorites', requestOptions);
+    const res = await fetch('/api/movies/favorites', requestOptions);
+    if (res.status === 200) {
+      notifySuccess('Movie successfully added');
+      getFavorites();
+    }
+    else notifyError();
   };
 
   const removeFavorite = async () => {
     const requestOptions = {
       method: 'DELETE',
     };
-    await fetch(`/api/movies/favorites/${id}`, requestOptions);
-  };
-
-  const getFavorites = async () => {
-    const res = await fetch('/api/movies/favorites');
-    const resJson = await res.json();
-    setFavorites(resJson);
+    const res = await fetch(`/api/movies/favorites/${id}`, requestOptions);
+    if (res.status === 200) {
+      notifySuccess('Movie successfully deleted');
+      getFavorites();
+    }
+    else notifyError();
   };
   
   const getTrailer = async () => {
@@ -56,8 +81,6 @@ const DetailMovie = () => {
       if (objTrailer) setTrailer(objTrailer?.key);
     }
   };
-
-  const isMovieInFavorites = favorites.some((movie) => movie?.id === id);
 
   
   const ModalTrailer = () => {
@@ -90,6 +113,7 @@ const DetailMovie = () => {
   return (
     <>
       <div className='detailWrapper'>
+        <ToastContainer />
         <div className="info">
           <img className="detailPoster" src={poster} alt='' />
           <div>

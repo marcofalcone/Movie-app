@@ -10,7 +10,10 @@ import LoginPage from './views/LoginPage';
 
 const App = () => {
 
-  const isLogged = true;
+  const isLogged = false;
+  // chiama server chiedi se è authenticato(ha un token)
+  // se non ce l'ha mandalo al login
+  // una volta fatto il login salva il token nel local storage
 
   return (
     <div className='mainWrapper'>

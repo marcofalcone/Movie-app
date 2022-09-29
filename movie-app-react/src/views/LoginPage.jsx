@@ -8,10 +8,8 @@ const LoginPage = () => {
       <img className='loginLogo' src={homeLogo} alt="" />
       <form className='loginBox'>
         <p className='loginTitle'>SIGN IN</p>
-        <label>Email</label>
-        <input type="email" />
-        <label>Password</label>
-        <input type="password" />
+        <input type="email" placeholder='Email' />
+        <input type="password" placeholder='Password' />
         <button className='signIn'>
           Sign in
         </button>

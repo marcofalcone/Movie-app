@@ -9,14 +9,14 @@ const MovieCard = ({movie, isSearch}) => {
   return (
     <div className={isSearch ? 'searchMovie' : 'movie'}>
       <Link to={{
-        pathname: `/detailMovie/${movie.title}`,
+        pathname: `/detail-movie/${movie.title}`,
         state: {
           poster: imgUrl + movie.poster_path,
           overview: movie.overview,
           vote: movie.vote_average,
           date: movie.release_date,
           title: movie.title,
-          id: movie.id
+          id: `${movie.id}`
         }
       }}>
         <img className="poster" src={imgUrl + movie.poster_path} alt='' />

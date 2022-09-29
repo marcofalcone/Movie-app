@@ -18,7 +18,7 @@ const Movielist = (props) => {
   return (
     <div className="container">
       <Link to={{
-        pathname: `/detailList/${props.title}`,
+        pathname: `/detail-list/${props.title}`,
         state: {
           movies: props.movies,
           title: props.title
