@@ -1,13 +1,13 @@
-GET http://localhost:5000/api/movies/favorites
+GET http://localhost:5000/api/users
 
 ###
 
-POST http://localhost:5000/api/movies/favorites
+POST http://localhost:5000/api/users
 content-type: application/json
 
 {
-    "name": "top gun",
-    "id": "985939"
+    "username": "top gun",
+    "password": "12345"
 }
 
 ###

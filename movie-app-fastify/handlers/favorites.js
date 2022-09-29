@@ -1,5 +1,9 @@
 const favorites = (fastify) => {
-  const collection = fastify.mongo.db.collection('favoritesMovies');
+  const {
+    find,
+    insertOne,
+    deleteOne
+  } = fastify.mongo.db.collection('favoritesMovies');
 
   const getFavorites = {
     schema: {
@@ -21,24 +25,41 @@ const favorites = (fastify) => {
       }
     },
     handler: async (req, reply) => {
-      const list = await collection.find({}).toArray()
+      const list = await find({}).toArray()
       reply.send(list)
     } 
   };
   
   const addFavorite = {
-    schema: {},
+    schema: {
+      response: {
+        200: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              poster_path: { type: "string" },
+              overview: { type: "string" },
+              vote_average: { type: "string" },
+              release_date: { type: "string" },
+              title: { type: "string" },
+              id: { type: "string" },
+            }
+          }
+        }
+      }
+    },
     handler: async (req, reply) => {
-      const res = await collection.insertOne(req.body)
-      if (res) reply.send("movie added")
+      await insertOne(req.body)
+      reply.code(200).send("Movie added to favorites")
     } 
   };
   
   const removeFavorite = {
-    schema: { id: {type: "number"}},
+    schema: { id: {type: "string"}},
     handler: async (req, reply) => {
-      const res = await collection.deleteOne({ "id": req.params.id })
-      if (res) reply.send(typeof (req.params.id))
+      await deleteOne({ "id": req.params.id })
+      reply.code(200).send("Movie removed from favorites")
     } 
   };
 

@@ -2,13 +2,17 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 import Fastify from 'fastify';
 import routes from './routes.js';
-import dbConnector from './plugins/dbConnector.js';
+import fastifyBcrypt from 'fastify-bcrypt';
+import fastifyMongo from '@fastify/mongodb';
 
 const fastify = Fastify({
   logger: true
 });
 
-fastify.register(dbConnector);
+fastify.register(fastifyMongo, {
+  url: process.env.MONGO_URL
+});
+fastify.register(fastifyBcrypt)
 fastify.register(routes);
 
 // Run the server!
