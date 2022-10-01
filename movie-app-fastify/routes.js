@@ -10,7 +10,9 @@ const routes = async (fastify, options, done) => {
 
   const {
     addUser,
-    getUsers
+    getUsers,
+    login,
+    auth,
   } = users(fastify)
   
   fastify.get('/api/movies/favorites', getFavorites);
@@ -23,7 +25,11 @@ const routes = async (fastify, options, done) => {
 
   fastify.post('/api/users', addUser);
 
-  fastify.delete('/api/users/:id', removeFavorite);
+  // fastify.delete('/api/users/:id', removeFavorite);
+
+  fastify.post('/api/users/login', login);
+
+  fastify.post('/api/users/auth', auth);
 
   // fastify.post("/login")
 

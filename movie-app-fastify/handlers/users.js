@@ -1,6 +1,7 @@
 const users = (fastify) => {
   const collection = fastify.mongo.db.collection('users');
-  const { hash } = fastify.bcrypt;
+  const { hash, compare } = fastify.bcrypt; // default salt (10)
+  const { sign, verify } = fastify.jwt;
 
   const getUsers = {
     // schema: {
@@ -47,26 +48,74 @@ const users = (fastify) => {
     //   }
     // },
     handler: async (req, reply) => {
-      await collection.insertOne({
-        username: req.body.username,
-        password: await hash(req.body.password)
-      })
-      reply.code(200).send("User created")
+      try {
+        await collection.insertOne({
+          username: req.body.username,
+          password: await hash(req.body.password)
+        })
+        reply.code(200).send("User created")
+      } catch (err) {
+        reply.send(err)
+      }
+      
     } 
   };
   
-  const removeUser = {
+  const login = {
     // schema: { id: {type: "string"}},
     handler: async (req, reply) => {
-      await collection.deleteOne({ "id": req.params.id })
-      reply.code(200).send("Movie removed from favorites")
+      try {
+        const res = await collection.findOne({ "username": req.body.username });
+        if (res) {
+          const passwordMatches = await compare(req.body.password, res.password)
+          if (passwordMatches) {
+            const accessToken = sign(req.body, { expiresIn: "1h"})
+            reply.send(
+              { 
+                code: 1,
+                message: "Login successfull",
+                accessToken,
+              }
+              )
+          } else {
+            reply.send(
+              {
+                code: 0,
+                message: "Incorrect password"
+              }
+            )
+          }
+        } else {
+          reply.send({
+            code: 2,
+            message: "User does not exist"
+          })
+        }
+      } catch (err) {
+        reply.send(err)
+      }
     } 
   };
 
+  const auth = {
+    handler: async (req, rep) => {
+      try {
+        await verify(req.body.accessToken, process.env.JWT_SECRET)
+        rep.send({
+          code: 1,
+          message: "User authorized"
+        })
+      } catch (err) {
+        rep.code(401).send(err)
+      }
+    }
+  }
+
   return {
+    auth,
     getUsers,
     addUser,
-    removeUser ,
+    login,
   };
 };
 

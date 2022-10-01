@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
 import { useHistory } from 'react-router-dom';
 import { Context } from '..';
-import { ToastContainer } from 'react-toastify';
 
 import '../styles/Detail.css';
 import Alert from '../components/Alert';
@@ -113,7 +112,6 @@ const DetailMovie = () => {
   return (
     <>
       <div className='detailWrapper'>
-        <ToastContainer />
         <div className="info">
           <img className="detailPoster" src={poster} alt='' />
           <div>

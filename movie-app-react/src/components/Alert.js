@@ -14,7 +14,7 @@ const Alert = () => {
 
   const notifySuccess = (text) => toast.success(text, toastOptions);
 
-  const notifyError = () => toast.error('An error occured', toastOptions);
+  const notifyError = (text) => toast.error(text || 'An error occured', toastOptions);
 
   const notifyWarning = (text) => toast.warning(text, toastOptions);
 

@@ -7,29 +7,38 @@ import '../styles/ResponsiveMovielist.css';
 import { Link } from 'react-router-dom';
 
 const Movielist = (props) => {
+
+  const {
+    id,
+    title,
+    movies,
+    isFetching,
+  } = props;
+
   const scroll_left = () => {
-    document.getElementById(props.id).scrollLeft += 1500; // see readme.md
+    document.getElementById(id).scrollLeft += 1500; // see readme.md
   };
 
   const scroll_right = () => {
-    document.getElementById(props.id).scrollLeft += -1500; // REDO
+    document.getElementById(id).scrollLeft += -1500; // REDO
   };
+  
 
   return (
     <div className="container">
       <Link to={{
-        pathname: `/detail-list/${props.title}`,
+        pathname: `/detail-list/${title}`,
         state: {
-          movies: props.movies,
-          title: props.title
+          movies: movies,
+          title: title
         }
       }}>
-        <span className="collectionTitle">{props.title}</span>
+        <span className="collectionTitle">{title}</span>
       </Link>
       <div className="left" onClick={scroll_right}>&#10094;</div>
       <div className="right" onClick={scroll_left}>&#10095;</div>
-      <div className="collection" id={props.id}>
-        {props.isFetching && <>
+      <div className="collection" id={id}>
+        {isFetching && <>
           <div className="movie">
             <Loader />
           </div>
@@ -62,11 +71,11 @@ const Movielist = (props) => {
           </div>
         </>
         }
-        {!props.isFetching &&
-          props.movies.map((movie, i) =>
+        {!isFetching && movies?.length ?
+          movies.map((movie, i) =>
             movie?.poster_path ? (
               <MovieCard key={i} movie={movie} />
-            ) : null)}
+            ) : null) : []}
       </div>
     </div>
   );

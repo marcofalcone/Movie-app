@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import routes from './routes.js';
 import fastifyBcrypt from 'fastify-bcrypt';
 import fastifyMongo from '@fastify/mongodb';
+import fastifyJwt from '@fastify/jwt'
 
 const fastify = Fastify({
   logger: true
@@ -12,6 +13,9 @@ const fastify = Fastify({
 fastify.register(fastifyMongo, {
   url: process.env.MONGO_URL
 });
+fastify.register(fastifyJwt, {
+  secret: process.env.JWT_SECRET
+})
 fastify.register(fastifyBcrypt)
 fastify.register(routes);
 
