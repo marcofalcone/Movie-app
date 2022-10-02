@@ -3,7 +3,7 @@ import homeLogo from '../assets/logo.svg';
 import Alert from '../components/Alert';
 import '../styles/Login.css';
 
-const LoginPage = ({setIsLogged}) => {
+const LoginPage = ({ setIsLogged }) => {
   const {
     notifyError,
   } = Alert();

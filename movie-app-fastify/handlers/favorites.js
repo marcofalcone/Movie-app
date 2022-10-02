@@ -1,9 +1,5 @@
 const favorites = (fastify) => {
-  const {
-    find,
-    insertOne,
-    deleteOne
-  } = fastify.mongo.db.collection('favoritesMovies');
+  const collection = fastify.mongo.db.collection('favoritesMovies');
 
   const getFavorites = {
     schema: {
@@ -25,8 +21,12 @@ const favorites = (fastify) => {
       }
     },
     handler: async (req, reply) => {
-      const list = await find({}).toArray()
-      reply.send(list)
+      try {
+        const list = await collection.find({}).toArray()
+      reply.code(200).send(list)
+      } catch (err) {
+        reply.send(err)
+      }
     } 
   };
   
@@ -50,7 +50,7 @@ const favorites = (fastify) => {
       }
     },
     handler: async (req, reply) => {
-      await insertOne(req.body)
+      await collection.insertOne(req.body)
       reply.code(200).send("Movie added to favorites")
     } 
   };
@@ -58,7 +58,7 @@ const favorites = (fastify) => {
   const removeFavorite = {
     schema: { id: {type: "string"}},
     handler: async (req, reply) => {
-      await deleteOne({ "id": req.params.id })
+      await collection.deleteOne({ "id": req.params.id })
       reply.code(200).send("Movie removed from favorites")
     } 
   };

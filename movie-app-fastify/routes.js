@@ -13,6 +13,7 @@ const routes = async (fastify, options, done) => {
     getUsers,
     login,
     auth,
+    logout,
   } = users(fastify)
   
   fastify.get('/api/movies/favorites', getFavorites);
@@ -25,11 +26,13 @@ const routes = async (fastify, options, done) => {
 
   fastify.post('/api/users', addUser);
 
+  fastify.put("/api/users/logout/:id", logout)
+
   // fastify.delete('/api/users/:id', removeFavorite);
 
   fastify.post('/api/users/login', login);
 
-  fastify.post('/api/users/auth', auth);
+  fastify.post('/api/users/auth/:id', auth);
 
   // fastify.post("/login")
 

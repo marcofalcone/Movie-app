@@ -24,6 +24,7 @@
     "dotenv": "^16.0.2",
     "fastify": "^4.6.0",
     "fastify-bcrypt": "^1.0.0",
-    "fastify-plugin": "^4.2.1"
+    "fastify-plugin": "^4.2.1",
+    "uuid": "^9.0.0"
   }
 }

@@ -14,3 +14,6 @@ content-type: application/json
 ###
 
 DELETE http://localhost:5000/api/movies/favorites/760161
+
+###
+PUT http://localhost:5000/api/users/logout/topgun

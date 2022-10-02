@@ -3,20 +3,35 @@ import { useHistory } from 'react-router-dom';
 import '../styles/Searchbox.css';
 import userLogo from '../assets/userLogo.png';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import Alert from './Alert';
 
-const Searchbox = () => {
+const Searchbox = ({ checkUser }) => {
   const history = useHistory();
   const [showDropdown, setShowDropdown] = useState(false);
+  const {
+    notifyError,
+  } = Alert();
 
   const Dropdown = () => {
     const ref = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) });
+
+    const logout = async () => {
+      const requestOptions = {
+        method: 'PUT',
+      };
+      const res = await fetch('/api/users/logout/topgun', requestOptions);
+      const resJson = await res.json();
+      if (resJson?.code === 1) await checkUser();
+      else notifyError();
+    };
+
     return (
       <div ref={ref} className='dropDown'>
         <span style={{ borderBottom: '1px solid #04b4e3' }}>USERNAME</span>
         <p>Change email</p>
         <p>Change password</p>
         <p>Change user</p>
-        <p>Sign out</p>
+        <p onClick={() => logout()}>Sign out</p>
       </div>
     );
   };

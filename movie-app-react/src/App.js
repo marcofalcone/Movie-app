@@ -27,6 +27,7 @@ const App = () => {
     const res = await fetch('/api/users/auth', requestOptions);
     const resJson = await res.json();
     if (resJson && resJson.code === 1) setIsLogged(true);
+    else setIsLogged(false);
     setIsCheckingUser(false);
   };
 
@@ -42,7 +43,7 @@ const App = () => {
             <Link to="/">
               <img className="logo" src={homeLogo} alt="" />
             </Link>
-            <Searchbox />
+            <Searchbox checkUser={checkUser} />
           </div>
           <Switch>
             <Route exact path="/">

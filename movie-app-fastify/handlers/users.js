@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const users = (fastify) => {
   const collection = fastify.mongo.db.collection('users');
   const { hash, compare } = fastify.bcrypt; // default salt (10)
@@ -51,7 +53,8 @@ const users = (fastify) => {
       try {
         await collection.insertOne({
           username: req.body.username,
-          password: await hash(req.body.password)
+          password: await hash(req.body.password),
+          tokenSalt: uuidv4()
         })
         reply.code(200).send("User created")
       } catch (err) {
@@ -65,15 +68,19 @@ const users = (fastify) => {
     // schema: { id: {type: "string"}},
     handler: async (req, reply) => {
       try {
-        const res = await collection.findOne({ "username": req.body.username });
-        if (res) {
-          const passwordMatches = await compare(req.body.password, res.password)
+        const user = await collection.findOne({ "username": req.body.username });
+        if (user) {
+          const passwordMatches = await compare(req.body.password, user.password)
           if (passwordMatches) {
-            const accessToken = sign(req.body, { expiresIn: "1h"})
+            const accessToken = sign(req.body, {
+              expiresIn: "10m",
+              key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
+            })
             reply.send(
               { 
                 code: 1,
                 message: "Login successfull",
+                user: req.body.username,
                 accessToken,
               }
               )
@@ -97,10 +104,30 @@ const users = (fastify) => {
     } 
   };
 
+  const logout = {
+    handler: async (req, rep) => {
+      try {
+        await collection.findOneAndUpdate(
+          { "username": req.params.id },
+          { $set : { tokenSalt: uuidv4() }}
+          );
+        rep.code(200).send({
+          code: 1,
+          message: "Logout successfull"
+        })
+      } catch (err) {
+        rep.code(500).send(err)
+      }
+    }
+  }
+
   const auth = {
     handler: async (req, rep) => {
       try {
-        await verify(req.body.accessToken, process.env.JWT_SECRET)
+        const user = await collection.findOne({ "username": req.params.id });
+        await verify(req.body.accessToken, {
+          key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
+        })
         rep.send({
           code: 1,
           message: "User authorized"
@@ -116,6 +143,7 @@ const users = (fastify) => {
     getUsers,
     addUser,
     login,
+    logout,
   };
 };
 
