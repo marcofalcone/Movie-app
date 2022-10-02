@@ -21,3 +21,6 @@ yarn-error.log*
 movie-app-fastify/.env
 movie-app-fastify/package-lock.json
 movie-app-fastify/node_modules
+movie-app-fastify/test.http
+
+React-movie-app.code-workspace
