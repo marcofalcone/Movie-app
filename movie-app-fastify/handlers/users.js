@@ -80,7 +80,7 @@ const users = (fastify) => {
               { 
                 code: 1,
                 message: "Login successfull",
-                user: req.body.username,
+                username: req.body.username,
                 accessToken,
               }
               )
@@ -124,7 +124,7 @@ const users = (fastify) => {
   const auth = {
     handler: async (req, rep) => {
       try {
-        const user = await collection.findOne({ "username": req.params.id });
+        const user = await collection.findOne({ "username": req.body.username });
         await verify(req.body.accessToken, {
           key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
         })

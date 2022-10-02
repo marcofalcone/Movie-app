@@ -32,7 +32,7 @@ const routes = async (fastify, options, done) => {
 
   fastify.post('/api/users/login', login);
 
-  fastify.post('/api/users/auth/:id', auth);
+  fastify.post('/api/users/auth', auth);
 
   // fastify.post("/login")
 

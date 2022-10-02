@@ -21,7 +21,8 @@ const App = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        accessToken: localStorage.getItem('accessToken')
+        accessToken: localStorage.getItem('accessToken'),
+        username: localStorage.getItem('username'),
       })
     };
     const res = await fetch('/api/users/auth', requestOptions);

@@ -19,10 +19,11 @@ const Searchbox = ({ checkUser }) => {
       const requestOptions = {
         method: 'PUT',
       };
-      const res = await fetch('/api/users/logout/topgun', requestOptions);
+      const res = await fetch(`/api/users/logout/${localStorage.getItem('username')}`, requestOptions);
       const resJson = await res.json();
       if (resJson?.code === 1) await checkUser();
       else notifyError();
+      localStorage.clear();
     };
 
     return (

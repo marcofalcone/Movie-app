@@ -21,6 +21,7 @@ const LoginPage = ({ setIsLogged }) => {
     if (resJson.code === 1 && resJson.accessToken) {
       setIsLogged(true);
       localStorage.setItem('accessToken', resJson.accessToken);
+      localStorage.setItem('username', resJson.username);
     } else if (resJson.code === 0) {
       notifyError(resJson.message);
     } else if (resJson.code === 2) {
