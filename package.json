@@ -21,6 +21,7 @@
   "dependencies": {
     "@fastify/jwt": "^6.3.2",
     "@fastify/mongodb": "^6.1.0",
+    "@fastify/static": "^6.5.0",
     "dotenv": "^16.0.2",
     "fastify": "^4.6.0",
     "fastify-bcrypt": "^1.0.0",

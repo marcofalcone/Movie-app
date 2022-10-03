@@ -5,6 +5,8 @@ import routes from './routes.js';
 import bcrypt from './plugin/bcrypt.js';
 import mongo from './plugin/mongo.js';
 import jwt from './plugin/jwt.js';
+import fastStatic from "./plugin/static.js"
+
 
 const fastify = Fastify({
   logger: true
@@ -14,6 +16,11 @@ fastify.register(mongo);
 fastify.register(jwt)
 fastify.register(bcrypt)
 fastify.register(routes);
+fastify.register(fastStatic);
+
+fastify.get('/', function (req, reply) {
+  reply.sendFile('index.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+})
 
 // Run the server!
 fastify.listen({ port: process.env.PORT }, (err, address) => {
