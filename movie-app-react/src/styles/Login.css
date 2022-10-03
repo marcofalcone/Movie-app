@@ -41,7 +41,7 @@
   width: 400px;
 }
 
-.signIn {
+.formButton {
   width: 200px;
   font-size: 20px;
   background-color: #04b4e3;
@@ -51,7 +51,7 @@
   cursor: pointer;
 }
 
-.signIn:hover {
+.formButton:hover {
   background-color: #49c0c3;
 }
 

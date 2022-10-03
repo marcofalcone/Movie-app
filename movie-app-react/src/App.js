@@ -9,6 +9,7 @@ import homeLogo from './assets/logo.svg';
 import LoginPage from './views/LoginPage';
 import { ToastContainer } from 'react-toastify';
 import Loader from './components/Loader';
+import RegisterPage from './views/RegisterPage';
 
 const App = () => {
 
@@ -17,12 +18,17 @@ const App = () => {
 
   const checkUser = async () => {
     setIsCheckingUser(true);
+    const {
+      accessToken,
+      email
+    } = JSON.parse(localStorage.getItem('user')) ?? {};
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        accessToken: localStorage.getItem('accessToken'),
-        username: localStorage.getItem('username'),
+        accessToken,
+        email,
       })
     };
     const res = await fetch('/api/users/auth', requestOptions);
@@ -62,7 +68,14 @@ const App = () => {
           </Switch>
         </>
       ) : (
-        <LoginPage setIsLogged={setIsLogged} />
+        <Switch>
+          <Route exact path="/">
+            <LoginPage setIsLogged={setIsLogged} />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
+          </Route>
+        </Switch>
       )}
       <ToastContainer />
     </div>

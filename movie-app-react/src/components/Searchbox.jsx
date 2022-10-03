@@ -14,14 +14,19 @@ const Searchbox = ({ checkUser }) => {
 
   const Dropdown = () => {
     const ref = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) });
-
+    const {
+      email
+    } = JSON.parse(localStorage.getItem('user')) ?? {};
     const logout = async () => {
       const requestOptions = {
         method: 'PUT',
       };
-      const res = await fetch(`/api/users/logout/${localStorage.getItem('username')}`, requestOptions);
+      const res = await fetch(`/api/users/logout/${email}`, requestOptions);
       const resJson = await res.json();
-      if (resJson?.code === 1) await checkUser();
+      if (resJson?.code === 1) {
+        await checkUser();
+        history.push('/');
+      }
       else notifyError();
       localStorage.clear();
     };
@@ -31,7 +36,6 @@ const Searchbox = ({ checkUser }) => {
         <span style={{ borderBottom: '1px solid #04b4e3' }}>USERNAME</span>
         <p>Change email</p>
         <p>Change password</p>
-        <p>Change user</p>
         <p onClick={() => logout()}>Sign out</p>
       </div>
     );

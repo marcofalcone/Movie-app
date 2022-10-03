@@ -53,14 +53,17 @@ const users = (fastify) => {
       try {
         await collection.insertOne({
           username: req.body.username,
+          email: req.body.email,
           password: await hash(req.body.password),
           tokenSalt: uuidv4()
         })
-        reply.code(200).send("User created")
+        reply.code(200).send({
+          code: 1,
+          message: "User created"
+        })
       } catch (err) {
         reply.send(err)
       }
-      
     } 
   };
   
@@ -68,7 +71,7 @@ const users = (fastify) => {
     // schema: { id: {type: "string"}},
     handler: async (req, reply) => {
       try {
-        const user = await collection.findOne({ "username": req.body.username });
+        const user = await collection.findOne({ "email": req.body.email });
         if (user) {
           const passwordMatches = await compare(req.body.password, user.password)
           if (passwordMatches) {
@@ -80,7 +83,8 @@ const users = (fastify) => {
               { 
                 code: 1,
                 message: "Login successfull",
-                username: req.body.username,
+                username: user.username,
+                email: user.email,
                 accessToken,
               }
               )
@@ -108,7 +112,7 @@ const users = (fastify) => {
     handler: async (req, rep) => {
       try {
         await collection.findOneAndUpdate(
-          { "username": req.params.id },
+          { "email": req.params.id },
           { $set : { tokenSalt: uuidv4() }}
           );
         rep.code(200).send({
@@ -124,7 +128,7 @@ const users = (fastify) => {
   const auth = {
     handler: async (req, rep) => {
       try {
-        const user = await collection.findOne({ "username": req.body.username });
+        const user = await collection.findOne({ "email": req.body.email });
         await verify(req.body.accessToken, {
           key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
         })

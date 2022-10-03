@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import homeLogo from '../assets/logo.svg';
 import Alert from '../components/Alert';
 import '../styles/Login.css';
@@ -18,10 +19,14 @@ const LoginPage = ({ setIsLogged }) => {
     };
     const res = await fetch('/api/users/login', requestOptions);
     const resJson = await res.json();
+    console.log(resJson);
     if (resJson.code === 1 && resJson.accessToken) {
       setIsLogged(true);
-      localStorage.setItem('accessToken', resJson.accessToken);
-      localStorage.setItem('username', resJson.username);
+      localStorage.setItem('user', JSON.stringify({
+        accessToken: resJson.accessToken,
+        username: resJson.username,
+        email: resJson.email
+      }));
     } else if (resJson.code === 0) {
       notifyError(resJson.message);
     } else if (resJson.code === 2) {
@@ -38,8 +43,8 @@ const LoginPage = ({ setIsLogged }) => {
         <p className='loginTitle'>SIGN IN</p>
         <input onChange={(e) => setForm({
           ...form,
-          username: e?.target?.value
-        })} type="username" placeholder='Username' />
+          email: e?.target?.value
+        })} type="email" placeholder='Email' />
         <input onChange={(e) => setForm({
           ...form,
           password: e?.target?.value
@@ -47,12 +52,16 @@ const LoginPage = ({ setIsLogged }) => {
         <button onClick={(e) => {
           e?.preventDefault();
           checkCredentials();
-        }} className='signIn'>
+        }} className='formButton'>
           Sign in
         </button>
-        <p className='register'>
-          Register
-        </p>
+        <Link to={{
+          pathname: '/register',
+        }}>
+          <p className='register'>
+          New user?
+          </p>
+        </Link>
         <p className='forgot'>
           Forgot password?
         </p>
