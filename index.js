@@ -16,11 +16,7 @@ fastify.register(mongo);
 fastify.register(jwt)
 fastify.register(bcrypt)
 fastify.register(routes);
-fastify.register(fastStatic);
-
-fastify.get('/', function (req, reply) {
-  reply.sendFile('index.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
-})
+fastify.register(fastStatic)
 
 // Run the server!
 fastify.listen({ port: process.env.PORT }, (err, address) => {

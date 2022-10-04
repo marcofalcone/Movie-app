@@ -15,6 +15,10 @@ const routes = async (fastify, options, done) => {
     auth,
     logout,
   } = users(fastify)
+
+  fastify.setNotFoundHandler((req, res) => {
+    res.sendFile('index.html')
+  })
   
   fastify.get('/api/movies/favorites', getFavorites);
 
