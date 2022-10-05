@@ -19,7 +19,7 @@ fastify.register(routes);
 fastify.register(fastStatic)
 
 // Run the server!
-fastify.listen({ port: process.env.PORT }, (err, address) => {
+fastify.listen({ port: process.env.PORT || 5000 }, (err, address) => {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
