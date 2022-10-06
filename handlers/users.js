@@ -6,24 +6,6 @@ const users = (fastify) => {
   const { sign, verify } = fastify.jwt;
 
   const getUsers = {
-    // schema: {
-    //   response: {
-    //     200: {
-    //       type: "array",
-    //       items: {
-    //         type: "object",
-    //         properties: {
-    //           poster_path: { type: "string" },
-    //           overview: { type: "string" },
-    //           vote_average: { type: "string" },
-    //           release_date: { type: "string" },
-    //           title: { type: "string" },
-    //           id: { type: "string" },
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
     handler: async (req, reply) => {
       const list = await collection.find({}).toArray()
       reply.send(list)
@@ -31,26 +13,15 @@ const users = (fastify) => {
   };
   
   const addUser = {
-    // schema: {
-    //   response: {
-    //     200: {
-    //       type: "array",
-    //       items: {
-    //         type: "object",
-    //         properties: {
-    //           poster_path: { type: "string" },
-    //           overview: { type: "string" },
-    //           vote_average: { type: "string" },
-    //           release_date: { type: "string" },
-    //           title: { type: "string" },
-    //           id: { type: "string" },
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
     handler: async (req, reply) => {
       try {
+        const user = await collection.findOne({ "email": req.body.email });
+        if (user) {
+          reply.code(400).send({
+            code: 0,
+            message: "Email already registered"
+          })
+        } else
         await collection.insertOne({
           username: req.body.username,
           email: req.body.email,
@@ -68,7 +39,6 @@ const users = (fastify) => {
   };
   
   const login = {
-    // schema: { id: {type: "string"}},
     handler: async (req, reply) => {
       try {
         const user = await collection.findOne({ "email": req.body.email });
@@ -76,7 +46,7 @@ const users = (fastify) => {
           const passwordMatches = await compare(req.body.password, user.password)
           if (passwordMatches) {
             const accessToken = sign(req.body, {
-              expiresIn: "10m",
+              expiresIn: "1h",
               key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
             })
             reply.send(
@@ -111,7 +81,7 @@ const users = (fastify) => {
   const logout = {
     handler: async (req, rep) => {
       try {
-        await collection.findOneAndUpdate(
+        await collection.updateOne(
           { "email": req.params.id },
           { $set : { tokenSalt: uuidv4() }}
           );

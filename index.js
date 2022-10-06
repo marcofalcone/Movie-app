@@ -18,7 +18,6 @@ fastify.register(bcrypt)
 fastify.register(routes);
 fastify.register(fastStatic)
 
-// Run the server!
 fastify.listen({ port: process.env.PORT || 5000, host: '0.0.0.0' }, (err, address) => {
   if (err) {
     fastify.log.error(err);

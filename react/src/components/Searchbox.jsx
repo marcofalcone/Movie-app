@@ -12,6 +12,10 @@ const Searchbox = ({ checkUser }) => {
     notifyError,
   } = Alert();
 
+  const {
+    username,
+  } = JSON.parse(localStorage.getItem('user')) ?? {};
+
   const Dropdown = () => {
     const ref = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) });
     const {
@@ -33,7 +37,7 @@ const Searchbox = ({ checkUser }) => {
 
     return (
       <div ref={ref} className='dropDown'>
-        <span style={{ borderBottom: '1px solid #04b4e3' }}>USERNAME</span>
+        <span style={{ borderBottom: '1px solid #04b4e3' }}>{username}</span>
         <p>Change email</p>
         <p>Change password</p>
         <p onClick={() => logout()}>Sign out</p>

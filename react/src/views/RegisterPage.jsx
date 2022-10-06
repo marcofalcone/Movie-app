@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import homeLogo from '../assets/logo.svg';
 import { useHistory } from 'react-router-dom';
 import '../styles/Login.css';
+import { registerSchema } from '../utils/schema';
+import Alert from '../components/Alert';
 
 const RegisterPage = () => {
   const history = useHistory();
+  const {
+    notifyError,
+  } = Alert();
 
   const [form, setForm] = useState({});
 
@@ -19,7 +24,18 @@ const RegisterPage = () => {
     const resJson = await res.json();
     if (resJson && resJson.code === 1) {
       history.push('/');
+    } else notifyError(resJson?.message);
+  };
+
+  const validateForm = async () => {
+    let isValid;
+    try {
+      isValid = await registerSchema.validate(form, { abortEarly: false });
+    } catch (err) {
+      isValid = false;
+      err?.inner?.map((err) => notifyError(err.message));
     }
+    return isValid;
   };
 
   return (
@@ -39,9 +55,12 @@ const RegisterPage = () => {
           ...form,
           password: e?.target?.value
         })} type="password" placeholder='Password' />
-        <button onClick={(e) => {
+        <button onClick={async (e) => {
           e?.preventDefault();
-          register();
+          const isFormValid = await validateForm();
+          if (isFormValid) {
+            register();
+          } else null;
         }} className='formButton'>
           Register
         </button>

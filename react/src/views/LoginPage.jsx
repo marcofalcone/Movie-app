@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import homeLogo from '../assets/logo.svg';
 import Alert from '../components/Alert';
 import '../styles/Login.css';
+import { loginSchema } from '../utils/schema';
 
 const LoginPage = ({ setIsLogged }) => {
   const {
@@ -19,7 +20,6 @@ const LoginPage = ({ setIsLogged }) => {
     };
     const res = await fetch('/api/users/login', requestOptions);
     const resJson = await res.json();
-    console.log(resJson);
     if (resJson.code === 1 && resJson.accessToken) {
       setIsLogged(true);
       localStorage.setItem('user', JSON.stringify({
@@ -36,6 +36,17 @@ const LoginPage = ({ setIsLogged }) => {
     }
   };
 
+  const validateForm = async () => {
+    let isValid;
+    try {
+      isValid = await loginSchema.validate(form, { abortEarly: false });
+    } catch (err) {
+      isValid = false;
+      err?.inner?.map((err) => notifyError(err.message));
+    }
+    return isValid;
+  };
+
   return (
     <div className='loginWrapper'>
       <img className='loginLogo' src={homeLogo} alt="" />
@@ -49,9 +60,12 @@ const LoginPage = ({ setIsLogged }) => {
           ...form,
           password: e?.target?.value
         })} type="password" placeholder='Password' />
-        <button onClick={(e) => {
+        <button onClick={async(e) => {
           e?.preventDefault();
-          checkCredentials();
+          const isFormValid = await validateForm();
+          if (isFormValid) {
+            checkCredentials();
+          } else null;
         }} className='formButton'>
           Sign in
         </button>
