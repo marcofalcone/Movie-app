@@ -21,10 +21,6 @@ const Homepage = () => {
     }
   });
 
-  const {
-    email,
-  } = JSON.parse(localStorage.getItem('user')) ?? {};
-
   const getMovies = async () => {
 
     const urlAction = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=28&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`;
@@ -55,6 +51,10 @@ const Homepage = () => {
     const urlMostPopular = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
     const response_MostPopular = await fetch(urlMostPopular);
     const responseJson_MostPopular = await response_MostPopular.json();
+
+    const {
+      email,
+    } = JSON.parse(localStorage.getItem('user')) ?? {};
 
     const response_Favorites = await fetch(`/api/movies/favorites/${email}`);
     const favoriteJson = await response_Favorites.json();

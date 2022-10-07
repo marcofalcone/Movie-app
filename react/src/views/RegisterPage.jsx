@@ -9,6 +9,7 @@ const RegisterPage = () => {
   const history = useHistory();
   const {
     notifyError,
+    notifySuccess,
   } = Alert();
 
   const [form, setForm] = useState({});
@@ -23,6 +24,7 @@ const RegisterPage = () => {
     const res = await fetch('/api/users', requestOptions);
     const resJson = await res.json();
     if (resJson && resJson.code === 1) {
+      notifySuccess('User successfully registered');
       history.push('/');
     } else notifyError(resJson?.message);
   };

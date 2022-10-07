@@ -12,6 +12,18 @@ const Searchbox = ({ checkUser }) => {
     notifyError,
   } = Alert();
 
+  const handleOnChange = (event) => {
+
+    if (event.target.value) {
+      history.replace({
+        pathname: '/search',
+        search: `?movie=${event.target.value}`
+      });
+    } else {
+      history.push('/');
+    }
+  };
+
   const {
     username,
   } = JSON.parse(localStorage.getItem('user')) ?? {};
@@ -46,7 +58,8 @@ const Searchbox = ({ checkUser }) => {
   };
   return (
     <div className='topRight'>
-      <input onChange={(event) => history.push(event.target.value ? `/search/${event.target.value}` : '/')} className="searchbox" placeholder="search movies ..."></input>
+      <input onChange={handleOnChange}
+        className="searchbox" placeholder="search movies ..."></input>
       <div className='logoWrapper'>
         <img onClick={() => setShowDropdown(!showDropdown) } className="userLogo" src={userLogo} alt="" />
         {showDropdown ? <Dropdown /> : null}
