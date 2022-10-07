@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Alert = () => {
   const toastOptions = {
-    position: 'top-right',
+    position: 'top-center',
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,

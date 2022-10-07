@@ -69,7 +69,7 @@ const DetailMovie = () => {
     };
     const res = await fetch(`/api/movies/favorites/${email}/${id}`, requestOptions);
     if (res.status === 200) {
-      notifySuccess('Movie successfully deleted');
+      notifySuccess('Movie successfully removed');
       getFavorites();
     }
     else notifyError();
