@@ -14,7 +14,7 @@ const SearchPage = () => {
   const movieSearched = url.get('movie');
 
   const getSearched = async () => {
-    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieSearched}`;
+    const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieSearched}&include_adult=false`;
     const response_Search = await fetch(urlSearch);
     const responseJson_Search = await response_Search.json();
     if (responseJson_Search?.results) setMovies(responseJson_Search.results);
