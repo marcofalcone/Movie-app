@@ -4,7 +4,7 @@ const favorites = (fastify) => {
   const getFavorites = {
     handler: async (req, reply) => {
       try {
-        const user = await collection.findOne({ email: req.params.email })
+        const user = await collection.findOne({ user: req.params.user })
         if (user) reply.code(200).send({
           code: 1,
           list: user.favorites
@@ -22,15 +22,15 @@ const favorites = (fastify) => {
   const addFavorite = {
     handler: async (req, reply) => {
       try {
-        const user = await collection.findOne({ email: req.params.email})
+        const user = await collection.findOne({ user: req.params.user})
         console.log(user)
         if (user) {
           await collection.updateOne(
-            { "email": req.params.email },
+            { "user": req.params.user },
             { $push : { favorites: req.body }}
             );
         } else await collection.insertOne({
-          email: req.params.email,
+          user: req.params.user,
           favorites: [req.body]
         })
         reply.code(200).send("Movie added to favorites")
@@ -45,7 +45,7 @@ const favorites = (fastify) => {
     handler: async (req, reply) => {
       console.log(req.params)
       await collection.updateOne(
-        { email: req.params.email },
+        { user: req.params.user },
         { $pull: { favorites: { id: req.params.movieId }}}
       )
       reply.code(200).send("Movie removed from favorites")

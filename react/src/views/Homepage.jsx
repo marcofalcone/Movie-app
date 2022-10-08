@@ -53,10 +53,10 @@ const Homepage = () => {
     const responseJson_MostPopular = await response_MostPopular.json();
 
     const {
-      email,
+      user,
     } = JSON.parse(localStorage.getItem('user')) ?? {};
 
-    const response_Favorites = await fetch(`/api/movies/favorites/${email}`);
+    const response_Favorites = await fetch(`/api/movies/favorites/${user}`);
     const favoriteJson = await response_Favorites.json();
 
     if (responseJson_Action

@@ -22,7 +22,7 @@ const DetailMovie = () => {
   } = Alert();
 
   const {
-    email,
+    user,
   } = JSON.parse(localStorage.getItem('user')) ?? {};
   
   const [trailer, setTrailer] = useState('');
@@ -32,7 +32,7 @@ const DetailMovie = () => {
   const isMovieInFavorites = favorites.some((movie) => movie?.id === id);
   
   const getFavorites = async () => {
-    const res = await fetch(`/api/movies/favorites/${email}`);
+    const res = await fetch(`/api/movies/favorites/${user}`);
     const resJson = await res.json();
     if (res && resJson.code === 1) setFavorites(resJson.list);
     else null;
@@ -55,7 +55,7 @@ const DetailMovie = () => {
         id
       })
     };
-    const res = await fetch(`/api/movies/favorites/${email}`, requestOptions);
+    const res = await fetch(`/api/movies/favorites/${user}`, requestOptions);
     if (res.status === 200) {
       notifySuccess('Movie successfully added');
       getFavorites();
@@ -67,7 +67,7 @@ const DetailMovie = () => {
     const requestOptions = {
       method: 'DELETE',
     };
-    const res = await fetch(`/api/movies/favorites/${email}/${id}`, requestOptions);
+    const res = await fetch(`/api/movies/favorites/${user}/${id}`, requestOptions);
     if (res.status === 200) {
       notifySuccess('Movie successfully removed');
       getFavorites();

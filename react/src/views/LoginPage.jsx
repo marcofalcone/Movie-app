@@ -24,8 +24,7 @@ const LoginPage = ({ setIsLogged }) => {
       setIsLogged(true);
       localStorage.setItem('user', JSON.stringify({
         accessToken: resJson.accessToken,
-        username: resJson.username,
-        email: resJson.email
+        user: resJson.user,
       }));
     } else if (resJson.code === 0) {
       notifyError(resJson.message);
@@ -54,8 +53,8 @@ const LoginPage = ({ setIsLogged }) => {
         <p className='loginTitle'>SIGN IN</p>
         <input onChange={(e) => setForm({
           ...form,
-          email: e?.target?.value
-        })} type="email" placeholder='Email' />
+          username: e?.target?.value
+        })} type="username" placeholder='Username' />
         <input onChange={(e) => setForm({
           ...form,
           password: e?.target?.value
@@ -76,9 +75,6 @@ const LoginPage = ({ setIsLogged }) => {
           New user?
           </p>
         </Link>
-        <p className='forgot'>
-          Forgot password?
-        </p>
       </form>
     </div>
   );

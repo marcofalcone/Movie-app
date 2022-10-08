@@ -20,7 +20,7 @@ const App = () => {
     setIsCheckingUser(true);
     const {
       accessToken,
-      email
+      user,
     } = JSON.parse(localStorage.getItem('user')) ?? {};
 
     const requestOptions = {
@@ -28,7 +28,7 @@ const App = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         accessToken,
-        email,
+        username: user,
       })
     };
     const res = await fetch('/api/users/auth', requestOptions);

@@ -25,19 +25,16 @@ const Searchbox = ({ checkUser }) => {
   };
 
   const {
-    username,
+    user
   } = JSON.parse(localStorage.getItem('user')) ?? {};
 
   const Dropdown = () => {
     const ref = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) });
-    const {
-      email
-    } = JSON.parse(localStorage.getItem('user')) ?? {};
     const logout = async () => {
       const requestOptions = {
         method: 'PUT',
       };
-      const res = await fetch(`/api/users/logout/${email}`, requestOptions);
+      const res = await fetch(`/api/users/logout/${user}`, requestOptions);
       const resJson = await res.json();
       if (resJson?.code === 1) {
         await checkUser();
@@ -49,9 +46,7 @@ const Searchbox = ({ checkUser }) => {
 
     return (
       <div ref={ref} className='dropDown'>
-        <span style={{ borderBottom: '1px solid #04b4e3' }}>{username}</span>
-        <p>Change email</p>
-        <p>Change password</p>
+        <span style={{ borderBottom: '1px solid #04b4e3' }}>{user}</span>
         <p onClick={() => logout()}>Sign out</p>
       </div>
     );

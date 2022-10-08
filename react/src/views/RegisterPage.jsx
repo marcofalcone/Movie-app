@@ -51,10 +51,6 @@ const RegisterPage = () => {
         })} type="username" placeholder='Username' />
         <input onChange={(e) => setForm({
           ...form,
-          email: e?.target?.value
-        })} type="email" placeholder='Email' />
-        <input onChange={(e) => setForm({
-          ...form,
           password: e?.target?.value
         })} type="password" placeholder='Password' />
         <button onClick={async (e) => {

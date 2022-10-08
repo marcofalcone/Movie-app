@@ -20,17 +20,17 @@ const routes = async (fastify, options, done) => {
     res.sendFile('index.html')
   })
   
-  fastify.get('/api/movies/favorites/:email', getFavorites);
+  fastify.get('/api/movies/favorites/:user', getFavorites);
 
-  fastify.post('/api/movies/favorites/:email', addFavorite);
+  fastify.post('/api/movies/favorites/:user', addFavorite);
 
-  fastify.delete('/api/movies/favorites/:email/:movieId', removeFavorite);
+  fastify.delete('/api/movies/favorites/:user/:movieId', removeFavorite);
 
   fastify.get('/api/users', getUsers);
 
   fastify.post('/api/users', addUser);
 
-  fastify.put("/api/users/logout/:id", logout)
+  fastify.put("/api/users/logout/:user", logout)
 
   // fastify.delete('/api/users/:id', removeFavorite);
 

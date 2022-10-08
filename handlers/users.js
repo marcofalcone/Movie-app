@@ -15,16 +15,15 @@ const users = (fastify) => {
   const addUser = {
     handler: async (req, reply) => {
       try {
-        const user = await collection.findOne({ "email": req.body.email });
+        const user = await collection.findOne({ "user": req.body.username });
         if (user) {
           reply.code(400).send({
             code: 0,
-            message: "Email already registered"
+            message: "User already registered"
           })
         } else
         await collection.insertOne({
-          username: req.body.username,
-          email: req.body.email,
+          user: req.body.username,
           password: await hash(req.body.password),
           tokenSalt: uuidv4()
         })
@@ -41,7 +40,7 @@ const users = (fastify) => {
   const login = {
     handler: async (req, reply) => {
       try {
-        const user = await collection.findOne({ "email": req.body.email });
+        const user = await collection.findOne({ "user": req.body.username });
         if (user) {
           const passwordMatches = await compare(req.body.password, user.password)
           if (passwordMatches) {
@@ -53,8 +52,7 @@ const users = (fastify) => {
               { 
                 code: 1,
                 message: "Login successfull",
-                username: user.username,
-                email: user.email,
+                user: user.user,
                 accessToken,
               }
               )
@@ -82,7 +80,7 @@ const users = (fastify) => {
     handler: async (req, rep) => {
       try {
         await collection.updateOne(
-          { "email": req.params.id },
+          { "user": req.params.user },
           { $set : { tokenSalt: uuidv4() }}
           );
         rep.code(200).send({
@@ -98,7 +96,7 @@ const users = (fastify) => {
   const auth = {
     handler: async (req, rep) => {
       try {
-        const user = await collection.findOne({ "email": req.body.email });
+        const user = await collection.findOne({ "user": req.body.username });
         await verify(req.body.accessToken, {
           key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
         })
