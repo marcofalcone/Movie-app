@@ -1,7 +1,7 @@
-import React from 'react';
-import '../styles/Loader.css';
+import '../styles/Loader.css'
+import React from 'react'
 
-const Loader = () => (
+const Loader = (): JSX.Element => (
   <div className="loadcont">
     <div className="loader">
       <div></div>
@@ -14,6 +14,6 @@ const Loader = () => (
       <div></div>
     </div>
   </div>
-);
+)
 
-export default Loader;
+export default Loader

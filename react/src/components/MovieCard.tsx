@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom'; // api address for poster img
-import { Context } from '..';
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom' // api address for poster img
+import { Context } from '..'
+import { Movie } from '../interfaces'
 
-const MovieCard = ({movie, isSearch}) => {
-
-  const { imgUrl } = useContext(Context);
+const MovieCard = ({ movie, isSearch }: { movie: Movie, isSearch?: boolean }): JSX.Element => {
+  const { imgUrl } = useContext(Context)
 
   return (
-    <div className={isSearch ? 'searchMovie' : 'movie'}>
+    <div className={isSearch ?? isSearch === true ? 'searchMovie' : 'movie'}>
       <Link to={{
         pathname: `/detail-movie/${movie.title}`,
         state: {
@@ -22,7 +22,7 @@ const MovieCard = ({movie, isSearch}) => {
         <img className="poster" src={imgUrl + movie.poster_path} alt='' />
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default MovieCard;
+export default MovieCard
