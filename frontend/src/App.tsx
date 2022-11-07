@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Switch, Route, Link, useHistory } from 'react-router-dom'
 import LoginPage from './views/LoginPage'
 import { ToastContainer } from 'react-toastify'
 import RegisterPage from './views/RegisterPage'
@@ -9,11 +9,11 @@ import Searchbox from './components/Searchbox'
 import Homepage from './views/Homepage'
 import SearchPage from './views/SearchPage'
 import DetailMovie from './views/DetailMovie'
-import DetailList from './views/DetailList'
 
 const App = (): JSX.Element => {
   const [isLogged, setIsLogged] = useState(false)
   const [isCheckingUser, setIsCheckingUser] = useState(false)
+  const history = useHistory()
 
   const {
     user,
@@ -34,7 +34,10 @@ const App = (): JSX.Element => {
     const res = await (await fetch('/api/users/auth', requestOptions)).json()
 
     if (res?.code === 1) setIsLogged(true)
-    else setIsLogged(false)
+    else {
+      setIsLogged(false)
+      history.push('/')
+    }
     setIsCheckingUser(false)
   }
 
@@ -53,9 +56,7 @@ const App = (): JSX.Element => {
                 <Link to="/">
                   <img className="logo" src={homeLogo} alt="" />
                 </Link>
-                <Searchbox checkUser={() => {
-                  void checkUser()
-                }} />
+                <Searchbox setIsLogged={setIsLogged} />
               </div>
               <Switch>
                 <Route exact path="/">
@@ -64,11 +65,8 @@ const App = (): JSX.Element => {
                 <Route path="/search">
                   <SearchPage />
                 </Route>
-                <Route path="/detail-movie/:id">
+                <Route path="/:id">
                   <DetailMovie />
-                </Route>
-                <Route path="/detail-list/:id">
-                  <DetailList />
                 </Route>
               </Switch>
             </>

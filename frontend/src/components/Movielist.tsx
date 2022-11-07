@@ -2,7 +2,6 @@ import MovieCard from './MovieCard'
 import React from 'react'
 
 import '../styles/Movielist.css'
-import { Link } from 'react-router-dom'
 import { Props } from '../interfaces'
 import Loader from './Loader'
 
@@ -24,15 +23,7 @@ const Movielist = (props: Props): JSX.Element => {
 
   return (
     <div className="container">
-      <Link to={{
-        pathname: `/detail-list/${title}`,
-        state: {
-          movies,
-          title
-        }
-      }}>
-        <span className="collectionTitle">{title}</span>
-      </Link>
+      <span className="collectionTitle">{title}</span>
       <div className="left" onClick={scrollRight}>&#10094;</div>
       <div className="right" onClick={scrollLeft}>&#10095;</div>
       <div className="collection" id={id}>

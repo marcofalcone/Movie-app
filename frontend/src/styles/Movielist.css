@@ -116,15 +116,10 @@
   top: 15px;
   font-size: 25px;
   margin-left: 40px;
-  cursor: pointer;
   z-index: 999;
-  -webkit-transition: .3s ease;
-  -o-transition: .3s ease;
-  transition: .3s ease;
-}
-
-.collectionTitle:hover {
-  color: #04b4e3;
+  border-bottom: 1px solid #04b4e3;
+  width: 95%;
+  user-select: none;
 }
 
 .left {

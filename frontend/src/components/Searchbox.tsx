@@ -3,9 +3,8 @@ import { useHistory } from 'react-router-dom'
 import '../styles/Searchbox.css'
 import userLogo from '../assets/userLogo.png'
 import { useDetectClickOutside } from 'react-detect-click-outside'
-import { notifyError } from './Alert'
 
-const Searchbox = ({ checkUser }: { checkUser: () => void }): JSX.Element => {
+const Searchbox = ({ setIsLogged }: { setIsLogged: (prop: boolean) => void }): JSX.Element => {
   const history = useHistory()
   const [showDropdown, setShowDropdown] = useState(false)
 
@@ -27,16 +26,8 @@ const Searchbox = ({ checkUser }: { checkUser: () => void }): JSX.Element => {
   const Dropdown = (): JSX.Element => {
     const ref = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) })
     const handleLogout = async (): Promise<void> => {
-      const requestOptions = {
-        method: 'PUT'
-      }
-      const res = await (await fetch(`/api/users/logout/${user}`, requestOptions)).json()
-
-      if (res?.code === 1) {
-        checkUser()
-        history.push('/')
-        localStorage.clear()
-      } else notifyError()
+      localStorage.clear()
+      setIsLogged(false)
     }
 
     return (

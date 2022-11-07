@@ -14,7 +14,6 @@ const routes = async (fastify: FastifyInstance, options: any, done: any) => {
     getUsers,
     login,
     auth,
-    logout,
   } = users(fastify)
 
   fastify.setNotFoundHandler((req, res) => {
@@ -30,8 +29,6 @@ const routes = async (fastify: FastifyInstance, options: any, done: any) => {
   fastify.get('/api/users', getUsers);
 
   fastify.post('/api/users', addUser);
-
-  fastify.put("/api/users/logout/:user", logout)
 
   fastify.post('/api/users/login', login);
 

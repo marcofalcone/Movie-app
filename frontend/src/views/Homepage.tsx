@@ -33,10 +33,9 @@ const Homepage = (): JSX.Element => {
   const urlThriller = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=53&sort_by=popularity.desc&language=en-US&include_adult=false&include_video=true&page=1`
   const urlMostPopular = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 
-  const listGenres = [urlAction, urlComedy, urlHorror, urlRomance, urlScifi, urlThriller]
-
-  const getMovies = async (arr: string[]): Promise<void> => {
-    const moviesFetch = arr.map(async (url: string) => await (await fetch(url)).json())
+  const getMovies = async (): Promise<void> => {
+    const listGenres = [urlAction, urlComedy, urlHorror, urlRomance, urlScifi, urlThriller]
+    const moviesFetch = listGenres.map(async (url: string) => await (await fetch(url)).json())
     const [
       { results: actionMovies },
       { results: comedyMovies },
@@ -50,11 +49,20 @@ const Homepage = (): JSX.Element => {
 
     const { list: favoriteMovies } = await (await fetch(`/api/movies/favorites/${user}`)).json()
 
+    const favoritesFetch = favoriteMovies !== undefined
+      ? favoriteMovies.map(async ({ id }: { id: string }) => {
+        const urlDetails = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`
+        return await (await fetch(urlDetails)).json()
+      })
+      : []
+
+    const favoritesList: any = await Promise.all(favoritesFetch)
+
     setIsFetching(false)
     setMovies({
       ...movies,
       popular: mostPopularMovies,
-      favorites: favoriteMovies,
+      favorites: favoritesList,
       genres: {
         action: actionMovies,
         comedy: comedyMovies,
@@ -125,7 +133,7 @@ const Homepage = (): JSX.Element => {
   ]
 
   useEffect(() => {
-    void getMovies(listGenres)
+    void getMovies()
   }, [user])
 
   return (

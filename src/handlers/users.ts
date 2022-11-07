@@ -74,24 +74,6 @@ const users = (fastify: FastifyInstance) => {
       }
     } 
   };
-
-  const logout = {
-    handler: async (req: any, rep: any) => {
-      try {
-        await collection?.updateOne(
-          { "user": req.params.user },
-          { $set : { tokenSalt: uuidv4() }}
-          );
-        rep.code(200).send({
-          code: 1,
-          message: "Logout successfull"
-        })
-      } catch (err) {
-        rep.code(500).send(err)
-      }
-    }
-  }
-
   const auth = {
     handler: async (req: any, rep: any) => {
       try {
@@ -111,7 +93,6 @@ const users = (fastify: FastifyInstance) => {
     getUsers,
     addUser,
     login,
-    logout,
   };
 };
 

@@ -23,24 +23,13 @@
 }
 
 html,body {
-  background: url(https://ik.imagekit.io/7ol7k87qcca/movies/movies_e1GC0VBxF.jpg) center center fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 100%;
   height: 100%;
+  background-color: #0a1d1f;
 }
 
 a {
   text-decoration: none;
-}
-
-.mainWrapper {
-  position: absolute;
-  width: 100%;
-  min-height: 100vh;
-  height: auto;
-  background: rgb(0,0,0, 0.8);
-  overflow: auto;
 }
 
 .topBar {
