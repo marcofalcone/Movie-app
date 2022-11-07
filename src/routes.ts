@@ -1,7 +1,8 @@
-import favorites from "./handlers/favorites.js";
-import users from "./handlers/users.js";
+import { FastifyInstance } from "fastify";
+import favorites from "./handlers/favorites";
+import users from "./handlers/users";
 
-const routes = async (fastify, options, done) => {
+const routes = async (fastify: FastifyInstance, options: any, done: any) => {
   const {
     getFavorites,
     addFavorite,
@@ -32,13 +33,9 @@ const routes = async (fastify, options, done) => {
 
   fastify.put("/api/users/logout/:user", logout)
 
-  // fastify.delete('/api/users/:id', removeFavorite);
-
   fastify.post('/api/users/login', login);
 
   fastify.post('/api/users/auth', auth);
-
-  // fastify.post("/login")
 
   done();
 };

@@ -3,26 +3,30 @@
   "version": "1.0.0",
   "description": "server",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index",
-    "start": "node index.js"
+    "dev": "nodemon --exec ts-node src/index",
+    "start": "node src/index",
+    "build": "tsc -p tsconfig.json"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.11.9",
     "eslint": "^8.23.1",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.5",
     "eslint-plugin-promise": "^6.0.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "@fastify/jwt": "^6.3.2",
     "@fastify/mongodb": "^6.1.0",
     "@fastify/static": "^6.5.0",
+    "@types/uuid": "^8.3.4",
     "dotenv": "^16.0.2",
     "fastify": "^4.6.0",
     "fastify-bcrypt": "^1.0.0",

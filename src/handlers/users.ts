@@ -1,31 +1,31 @@
-import { v4 as uuidv4 } from 'uuid';
+import { FastifyInstance } from 'fastify';
+import { v4 as uuidv4 } from "uuid";
 
-const users = (fastify) => {
-  const collection = fastify.mongo.db.collection('users');
+const users = (fastify: FastifyInstance) => {
+  const collection = fastify?.mongo?.db?.collection('users');
   const { hash, compare } = fastify.bcrypt; // default salt (10)
   const { sign, verify } = fastify.jwt;
 
   const getUsers = {
-    handler: async (req, reply) => {
-      const list = await collection.find({}).toArray()
+    handler: async (req: any, reply: any) => {
+      const list = await collection?.find({}).toArray()
       reply.send(list)
     } 
   };
   
   const addUser = {
-    handler: async (req, reply) => {
+    handler: async (req: any, reply: any) => {
       try {
-        const user = await collection.findOne({ "user": req.body.username });
+        const user = await collection?.findOne({ "user": req.body.username });
         if (user) {
           reply.code(400).send({
             code: 0,
             message: "User already registered"
           })
         } else
-        await collection.insertOne({
+        await collection?.insertOne({
           user: req.body.username,
           password: await hash(req.body.password),
-          tokenSalt: uuidv4()
         })
         reply.code(200).send({
           code: 1,
@@ -38,15 +38,14 @@ const users = (fastify) => {
   };
   
   const login = {
-    handler: async (req, reply) => {
+    handler: async (req: any, reply: any) => {
       try {
-        const user = await collection.findOne({ "user": req.body.username });
+        const user = await collection?.findOne({ "user": req.body.username });
         if (user) {
           const passwordMatches = await compare(req.body.password, user.password)
           if (passwordMatches) {
             const accessToken = sign(req.body, {
               expiresIn: "1h",
-              key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
             })
             reply.send(
               { 
@@ -77,9 +76,9 @@ const users = (fastify) => {
   };
 
   const logout = {
-    handler: async (req, rep) => {
+    handler: async (req: any, rep: any) => {
       try {
-        await collection.updateOne(
+        await collection?.updateOne(
           { "user": req.params.user },
           { $set : { tokenSalt: uuidv4() }}
           );
@@ -94,12 +93,9 @@ const users = (fastify) => {
   }
 
   const auth = {
-    handler: async (req, rep) => {
+    handler: async (req: any, rep: any) => {
       try {
-        const user = await collection.findOne({ "user": req.body.username });
-        await verify(req.body.accessToken, {
-          key: `${process.env.JWT_SECRET}.${user.tokenSalt}`
-        })
+        verify(req.body.accessToken)
         rep.send({
           code: 1,
           message: "User authorized"
