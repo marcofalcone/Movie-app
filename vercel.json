@@ -1,8 +1,13 @@
 {
-  "rewrites": [
-      {
-          "source": "/(.*)",
-          "destination": "/api/serverless.js"
-      }
+  "version": 2,
+  "builds": [{
+    "src": "./dist/index.js",
+    "use": "@now/node-server"
+  }],
+  "routes": [{"handle": "filesystem"},
+    {
+      "src": "/.*",
+      "dest": "./dist/index.js"
+    }
   ]
 }
