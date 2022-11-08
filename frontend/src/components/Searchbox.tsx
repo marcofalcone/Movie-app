@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import '../styles/Searchbox.css'
 import userLogo from '../assets/userLogo.png'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 
@@ -31,20 +30,20 @@ const Searchbox = ({ setIsLogged }: { setIsLogged: (prop: boolean) => void }): J
     }
 
     return (
-      <div ref={ref} className='dropDown'>
-        <span style={{ borderBottom: '1px solid #04b4e3' }}>{user}</span>
-        <p onClick={() => {
+      <div ref={ref} className='bg-black p-2 absolute right-0 top-10 border-2 rounded-md border-sky-500'>
+        <span className='border-b-2 border-b-sky-500 text-2xl text-sky-500'>{user}</span>
+        <p className='cursor-pointer hover:text-sky-500 transition mt-2 text-xl text-slate-50' onClick={() => {
           void handleLogout()
         }}>Sign out</p>
       </div>
     )
   }
   return (
-    <div className='topRight'>
+    <div className='flex gap-5 items-center'>
       <input onChange={(e) => handleOnChange(e.target.value)}
-        className="searchbox" placeholder="search movies ..."></input>
-      <div className='logoWrapper'>
-        <img onClick={() => setShowDropdown(!showDropdown) } className="userLogo" src={userLogo} alt="" />
+        className='text-1xl bg-transparent text-gray-50 border-2 rounded-md border-sky-500 p-1 focus:outline-none' placeholder="search movies ..."></input>
+      <div className='relative'>
+        <img onClick={() => setShowDropdown(!showDropdown) } className="h-7 cursor-pointer" src={userLogo} alt="" />
         {showDropdown ? <Dropdown /> : null}
       </div>
     </div>

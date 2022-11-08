@@ -7,13 +7,11 @@ const MovieCard = ({ movie, isSearch }: { movie: Movie, isSearch?: boolean }): J
   const { imgUrl } = useContext(Context)
 
   return (
-    <div className={isSearch ?? isSearch === true ? 'searchMovie' : 'movie'}>
-      <Link to={{
-        pathname: `/${movie.id}`
-      }}>
-        <img className="poster" src={imgUrl + movie.poster_path} alt='' />
-      </Link>
-    </div>
+    <Link to={{
+      pathname: `/${movie.id}`
+    }}>
+      <img className="w-44 h-full rounded-xl border-2 border-transparent hover:border-sky-500 transition" src={imgUrl + movie.poster_path} alt='' />
+    </Link>
   )
 }
 

@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '..'
 import Movielist from '../components/Movielist'
 
-import '../styles/App.css'
-
 const Homepage = (): JSX.Element => {
   const { apiKey } = useContext(Context)
   const [isFetching, setIsFetching] = useState(true)

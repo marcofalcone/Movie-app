@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom'
 import { Context } from '..'
 import MovieCard from '../components/MovieCard'
 
-import '../styles/Search.css'
-
 const SearchPage = (): JSX.Element => {
   const { apiKey } = useContext(Context)
   const [movies, setMovies] = useState([])
@@ -24,10 +22,10 @@ const SearchPage = (): JSX.Element => {
   }, [movieSearched])
 
   return (
-    <div className='gridPage'>
+    <div className='grid grid-cols-9 gap-5'>
       {movies?.length > 0
         ? movies?.map((movie, i) => (
-          <MovieCard isSearch key={i} movie={movie} />
+          <div key={i}><MovieCard isSearch movie={movie} /></div>
         ))
         : <h1 style={{ color: 'white', position: 'absolute' }}>No movies found</h1>}
     </div>

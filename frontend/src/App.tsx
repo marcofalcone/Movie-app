@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Switch, Route, Link, useHistory } from 'react-router-dom'
-import LoginPage from './views/LoginPage'
 import { ToastContainer } from 'react-toastify'
 import RegisterPage from './views/RegisterPage'
 import homeLogo from './assets/logo.svg'
-import Loader from './components/Loader'
 import Searchbox from './components/Searchbox'
 import Homepage from './views/Homepage'
 import SearchPage from './views/SearchPage'
 import DetailMovie from './views/DetailMovie'
+import LoginPage from './views/LoginPage'
+
+import './index.css'
 
 const App = (): JSX.Element => {
   const [isLogged, setIsLogged] = useState(false)
@@ -46,15 +47,15 @@ const App = (): JSX.Element => {
   }, [])
 
   return isCheckingUser
-    ? <Loader />
+    ? <>LOADER</>
     : (
-      <div className='mainWrapper'>
+      <>
         {isLogged
           ? (
             <>
-              <div className="topBar">
+              <div className="flex justify-between p-5 items-center">
                 <Link to="/">
-                  <img className="logo" src={homeLogo} alt="" />
+                  <img className="h-5" src={homeLogo} alt="" />
                 </Link>
                 <Searchbox setIsLogged={setIsLogged} />
               </div>
@@ -72,17 +73,20 @@ const App = (): JSX.Element => {
             </>
           )
           : (
-            <Switch>
-              <Route exact path="/">
-                <LoginPage setIsLogged={setIsLogged} />
-              </Route>
-              <Route path="/register">
-                <RegisterPage />
-              </Route>
-            </Switch>
+            <div className='w-screen h-screen flex justify-center items-center flex-col'>
+              <img className='h-7 absolute top-10' src={homeLogo} alt="" />
+              <Switch>
+                <Route exact path="/">
+                  <LoginPage setIsLogged={setIsLogged} />
+                </Route>
+                <Route path="/register">
+                  <RegisterPage />
+                </Route>
+              </Switch>
+            </div>
           )}
         <ToastContainer />
-      </div>
+      </>
     )
 }
 

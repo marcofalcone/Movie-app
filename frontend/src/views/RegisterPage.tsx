@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import homeLogo from '../assets/logo.svg'
 import { useHistory } from 'react-router-dom'
-import '../styles/Login.css'
 import { registerSchema } from '../utils/schema'
 import { notifyError, notifySuccess } from '../components/Alert'
 
@@ -44,26 +42,23 @@ const RegisterPage = (): JSX.Element => {
   }
 
   return (
-    <div className='loginWrapper'>
-      <img className='loginLogo' src={homeLogo} alt="" />
-      <form className='loginBox'>
-        <p className='loginTitle'>REGISTER</p>
-        <input onChange={(e) => setForm({
-          ...form,
-          username: e?.target?.value
-        })} type="username" placeholder='Username' />
-        <input onChange={(e) => setForm({
-          ...form,
-          password: e?.target?.value
-        })} type="password" placeholder='Password' />
-        <button onClick={(e) => {
-          e?.preventDefault()
-          void handleOnClick()
-        }} className='formButton'>
+    <form className='flex flex-col gap-5 items-center'>
+      <p className='text-slate-50 text-4xl font-sans'>REGISTER</p>
+      <input onChange={(e) => setForm({
+        ...form,
+        username: e?.target?.value
+      })} type="username" placeholder='Username' className='text-2xl bg-transparent text-gray-50 border-2 rounded-md border-sky-500 p-1' />
+      <input onChange={(e) => setForm({
+        ...form,
+        password: e?.target?.value
+      })} type="password" placeholder='Password' className='text-2xl bg-transparent text-gray-50 border-2 rounded-md border-sky-500 p-1' />
+      <button onClick={(e) => {
+        e?.preventDefault()
+        void handleOnClick()
+      }} className='text-2xl text-slate-50 hover:text-sky-500 transition'>
           Register
-        </button>
-      </form>
-    </div>
+      </button>
+    </form>
   )
 }
 

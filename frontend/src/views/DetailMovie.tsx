@@ -3,10 +3,9 @@ import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useParams } from 'react-router-dom'
 import { Context } from '..'
 
-import '../styles/Detail.css'
 import { Movie } from '../interfaces'
 import { notifyError, notifySuccess, notifyWarning } from '../components/Alert'
-import Loader from '../components/Loader'
+import { loader } from '../utils/loader'
 
 const DetailMovie = (): JSX.Element => {
   const { apiKey, imgUrl } = useContext(Context)
@@ -97,12 +96,12 @@ const DetailMovie = (): JSX.Element => {
     const ref = useDetectClickOutside({ onTriggered: () => setWatchTrailer(false) })
 
     return (
-      <div className="trailerWrapper">
-        <p onClick={() => setWatchTrailer(false)} className="closeTrailer">CLOSE &#10006;</p>
+      <div className="bg-black bg-opacity-80 absolute w-screen h-screen flex flex-col justify-center items-center">
+        <p onClick={() => setWatchTrailer(false)} className="text-2xl text-slate-50 cursor-pointer">CLOSE &#10006;</p>
         <iframe
           ref={ref}
           title="trailer"
-          className="trailerFrame"
+          className="w-3/4 h-3/4 border border-sky-500"
           src={`https://www.youtube.com/embed/${trailer}`}
           allowFullScreen
         />
@@ -116,33 +115,33 @@ const DetailMovie = (): JSX.Element => {
   }, [user])
 
   return isFetchingDetails
-    ? <Loader />
+    ? <>{loader}</>
     : (
       <>
-        <div className='detailWrapper'>
-          <div className="info">
-            <img className="detailPoster" src={imgUrl + poster} alt='' />
-            <div>
-              <p style={{ fontSize: '30px', marginBottom: '100px' }}>{title}</p>
-              <p style={{ fontSize: '30px' }}>{date}</p>
-              <p>{overview}</p>
-              <span style={{ fontSize: '30px' }}>{Number(vote).toFixed(1)}&#x2605;</span>
-              {trailer !== undefined ? <p onClick={() => setWatchTrailer(true)} className='detailAction'>Watch Trailer &#9658;</p> : null}
+        <div className="w-full h-full flex justify-center items-center">
+          <img className="p-5 mr-5 border-r border-r-sky-500" src={imgUrl + poster} alt='' />
+          <div className='text-2xl text-slate-50'>
+            <p className='text-5xl'>{title}</p>
+            <p>{date}</p>
+            <p>{overview}</p>
+            <span>{Number(vote).toFixed(1)}&#x2605;</span>
+            <div className='mt-20'>
+              {trailer !== undefined ? <p className="hover:text-sky-500 transition cursor-pointer" onClick={() => setWatchTrailer(true)}>Watch Trailer &#9658;</p> : null}
               {isMovieInFavorites
                 ? (
-                  <p onClick={() => { void removeFavorite() }} className='detailAction'>Remove from favorites &#x2b;</p>
+                  <p className="hover:text-sky-500 transition cursor-pointer" onClick={() => { void removeFavorite() }}>Remove from favorites &#x2b;</p>
                 )
                 : (
-                  <p onClick={() => { void addFavorite() }} className='detailAction'>Add to favorites &#x2b;</p>
+                  <p className="hover:text-sky-500 transition cursor-pointer" onClick={() => { void addFavorite() }}>Add to favorites &#x2b;</p>
                 )}
             </div>
           </div>
+          {watchTrailer
+            ? (
+              <ModalTrailer />
+            )
+            : null}
         </div>
-        {watchTrailer
-          ? (
-            <ModalTrailer />
-          )
-          : null}
       </>
     )
 }

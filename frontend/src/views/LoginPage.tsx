@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import homeLogo from '../assets/logo.svg'
 import { notifyError } from '../components/Alert'
-import '../styles/Login.css'
 import { loginSchema } from '../utils/schema'
 
 const LoginPage = ({ setIsLogged }: { setIsLogged: (prop: boolean) => void }): JSX.Element => {
@@ -49,34 +47,33 @@ const LoginPage = ({ setIsLogged }: { setIsLogged: (prop: boolean) => void }): J
     }
   }
 
+  const inputStyle = 'text-2xl bg-transparent text-gray-50 border-2 rounded-md border-sky-500 p-1 focus:outline-none'
+
   return (
-    <div className='loginWrapper'>
-      <img className='loginLogo' src={homeLogo} alt="" />
-      <form className='loginBox'>
-        <p className='loginTitle'>SIGN IN</p>
-        <input onChange={(e) => setForm({
-          ...form,
-          username: e?.target?.value
-        })} type="username" placeholder='Username' />
-        <input onChange={(e) => setForm({
-          ...form,
-          password: e?.target?.value
-        })} type="password" placeholder='Password' />
-        <button onClick={(e) => {
-          e?.preventDefault()
-          void handleOnClick()
-        }} className='formButton'>
+    <form className='flex flex-col gap-5 items-center justify-center'>
+      <p className='text-slate-50 text-4xl font-sans'>SIGN IN</p>
+      <input onChange={(e) => setForm({
+        ...form,
+        username: e?.target?.value
+      })} type="username" placeholder='Username' className={inputStyle} />
+      <input onChange={(e) => setForm({
+        ...form,
+        password: e?.target?.value
+      })} type="password" placeholder='Password' className={inputStyle} />
+      <button onClick={(e) => {
+        e?.preventDefault()
+        void handleOnClick()
+      }} className='text-2xl text-slate-50 hover:text-sky-500 transition'>
           Sign in
-        </button>
-        <Link to={{
-          pathname: '/register'
-        }}>
-          <p className='register'>
+      </button>
+      <Link to={{
+        pathname: '/register'
+      }}>
+        <p className='text-2xl text-slate-50 hover:text-sky-500 transition'>
           New user?
-          </p>
-        </Link>
-      </form>
-    </div>
+        </p>
+      </Link>
+    </form>
   )
 }
 
