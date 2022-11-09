@@ -27,6 +27,7 @@ const Searchbox = ({ setIsLogged }: { setIsLogged: (prop: boolean) => void }): J
     const handleLogout = async (): Promise<void> => {
       localStorage.clear()
       setIsLogged(false)
+      history.push('/')
     }
 
     return (
