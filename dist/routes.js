@@ -16,7 +16,7 @@ const favorites_1 = __importDefault(require("./handlers/favorites"));
 const users_1 = __importDefault(require("./handlers/users"));
 const routes = (fastify, options, done) => __awaiter(void 0, void 0, void 0, function* () {
     const { getFavorites, addFavorite, removeFavorite } = (0, favorites_1.default)(fastify);
-    const { addUser, getUsers, login, auth, logout, } = (0, users_1.default)(fastify);
+    const { addUser, getUsers, login, auth, } = (0, users_1.default)(fastify);
     fastify.setNotFoundHandler((req, res) => {
         res.sendFile('index.html');
     });
@@ -25,7 +25,6 @@ const routes = (fastify, options, done) => __awaiter(void 0, void 0, void 0, fun
     fastify.delete('/api/movies/favorites/:user/:movieId', removeFavorite);
     fastify.get('/api/users', getUsers);
     fastify.post('/api/users', addUser);
-    fastify.put("/api/users/logout/:user", logout);
     fastify.post('/api/users/login', login);
     fastify.post('/api/users/auth', auth);
     done();

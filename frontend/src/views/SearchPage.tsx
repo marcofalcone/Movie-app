@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Context } from '..'
 import MovieCard from '../components/MovieCard'
+import { Movie } from '../interfaces'
 
 const SearchPage = (): JSX.Element => {
   const { apiKey } = useContext(Context)
@@ -14,7 +15,8 @@ const SearchPage = (): JSX.Element => {
   const getSearched = async (): Promise<void> => {
     const urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieSearched}&include_adult=false`
     const res = await (await fetch(urlSearch)).json()
-    setMovies(res?.results)
+    const filteredMovie = Array.isArray(res?.results) ? res.results.filter((movie: Movie) => movie.poster_path) : []
+    setMovies(filteredMovie)
   }
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const SearchPage = (): JSX.Element => {
   }, [movieSearched])
 
   return (
-    <div className='grid grid-cols-9 gap-5'>
+    <div className='grid lg:grid-cols-9 md:grid-cols-5 sm:grid-cols-3  gap-5'>
       {movies?.length > 0
         ? movies?.map((movie, i) => (
           <div key={i}><MovieCard isSearch movie={movie} /></div>

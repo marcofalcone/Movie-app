@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const uuid_1 = require("uuid");
 const users = (fastify) => {
     var _a, _b;
     const collection = (_b = (_a = fastify === null || fastify === void 0 ? void 0 : fastify.mongo) === null || _a === void 0 ? void 0 : _a.db) === null || _b === void 0 ? void 0 : _b.collection('users');
@@ -82,20 +81,6 @@ const users = (fastify) => {
             }
         })
     };
-    const logout = {
-        handler: (req, rep) => __awaiter(void 0, void 0, void 0, function* () {
-            try {
-                yield (collection === null || collection === void 0 ? void 0 : collection.updateOne({ "user": req.params.user }, { $set: { tokenSalt: (0, uuid_1.v4)() } }));
-                rep.code(200).send({
-                    code: 1,
-                    message: "Logout successfull"
-                });
-            }
-            catch (err) {
-                rep.code(500).send(err);
-            }
-        })
-    };
     const auth = {
         handler: (req, rep) => __awaiter(void 0, void 0, void 0, function* () {
             try {
@@ -115,7 +100,6 @@ const users = (fastify) => {
         getUsers,
         addUser,
         login,
-        logout,
     };
 };
 exports.default = users;

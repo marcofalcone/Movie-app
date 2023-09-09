@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
@@ -43,7 +42,7 @@ fastify.register(jwt_1.default);
 fastify.register(bcrypt_1.default);
 fastify.register(routes_1.default);
 fastify.register(static_1.default);
-fastify.listen({ port: (_a = Number(process.env.PORT)) !== null && _a !== void 0 ? _a : 5000, host: '0.0.0.0' }, (err, address) => {
+fastify.listen({ port: Number(process.env.PORT) || 5000, host: '0.0.0.0' }, (err, address) => {
     if (err) {
         fastify.log.error(err);
         process.exit(1);
