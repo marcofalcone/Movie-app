@@ -1,4 +1,4 @@
-![Screenshot from 2022-11-10 21-03-31](https://user-images.githubusercontent.com/61291681/201195428-cf35c64e-f4ab-4718-b160-83be7f84388e.png)
+![Screenshot 2023-09-09 144519](https://github.com/marcofalcone/Movie-app/assets/61291681/a559b677-b183-4b3a-8432-ffe4ff92282d)
 
 Netflix clone CRUD web app built with TypeScript, React, Tailwind, Fastify and MongoDb
 
