@@ -2,4 +2,4 @@
 
 CRUD web app built with TypeScript, React, Tailwind, Fastify and MongoDb
 
-Check out the live demo at https://movie-app-syre.onrender.com/
+Check out the live demo at https://movie-app-syre.onrender.com/ (slow load time on render)
